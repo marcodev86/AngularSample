@@ -5,7 +5,12 @@ import { View2Component } from './view/view2/view2.component';
 
 const routes: Routes = [
   { path: 'view1', component: View1Component },
-  { path: 'view2', component: View2Component }
+  { path: 'view2', component: View2Component },
+  {
+    path: 'studente',
+    loadChildren: () => import('./modules/studente/studente.module').then(m => m.StudenteModule)
+  },
+  { path: 'corso', loadChildren: () => import('./corso/corso.module').then(m => m.CorsoModule) }
 ];
 
 @NgModule({
