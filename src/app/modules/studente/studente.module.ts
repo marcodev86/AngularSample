@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { StudenteComponent } from './studente.component';
 import { StudenteRoutingModule } from './studente-routing.modules';
 import { StudenteDetailComponent } from '../studente-detail/studente-detail.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -13,7 +15,9 @@ import { StudenteDetailComponent } from '../studente-detail/studente-detail.comp
   ],
   imports: [
     CommonModule,
-    StudenteRoutingModule
+    StudenteRoutingModule,
+    MatButtonModule,
+    MatTableModule
   ]
 })
 export class StudenteModule { }
