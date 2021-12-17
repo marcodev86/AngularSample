@@ -5,6 +5,7 @@ import { StudenteRoutingModule } from './studente-routing.modules';
 import { StudenteDetailComponent } from '../studente-detail/studente-detail.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -17,7 +18,8 @@ import { MatTableModule } from '@angular/material/table';
     CommonModule,
     StudenteRoutingModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    HttpClientModule
   ]
 })
 export class StudenteModule { }
