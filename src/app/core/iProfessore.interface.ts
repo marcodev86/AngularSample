@@ -1,5 +1,4 @@
-export interface IStudente {
-    id: number;
+export interface IProfessore {
     nome: string;
     cognome: string;
     dataDiNascita: string;
@@ -11,8 +10,7 @@ export interface IStudente {
     numeroCivico: string;
 }
 
-export class Studente implements IStudente {
-    id: number;
+export class Professore implements IProfessore {
     nome: string;
     cognome: string;
     dataDiNascita: string;
@@ -23,8 +21,7 @@ export class Studente implements IStudente {
     via: string;
     numeroCivico: string;
 
-    constructor(id: number, nome: string, cognome: string, dataDiNascita: string, comune: string, codiceFiscale: string, telefono: string, cap: string, via: string, numeroCivico: string) {
-        this.id = id;
+    constructor(nome: string, cognome: string, dataDiNascita: string, comune: string, codiceFiscale: string, telefono: string, cap: string, via: string, numeroCivico: string) {
         this.nome = nome;
         this.cognome = cognome;
         this.dataDiNascita = dataDiNascita;

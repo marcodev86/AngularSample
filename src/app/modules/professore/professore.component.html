@@ -7,7 +7,7 @@
         <th mat-header-cell *matHeaderCellDef> Id </th>
         <td mat-cell *matCellDef="let element"> {{element.id}} </td>
     </ng-container>
-
+    
     <ng-container matColumnDef="nome">
         <th mat-header-cell *matHeaderCellDef> Nome </th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -55,74 +55,74 @@
 
     <ng-container matColumnDef="azione">
         <th mat-header-cell *matHeaderCellDef> Azione </th>
-        <td mat-cell *matCellDef="let element"> 
+        <td mat-cell *matCellDef="let element">
             <button mat-raised-button (click)="startModify(element)">Modifica</button>
-            <button mat-raised-button color="warn" (click)="deleteStudente(element.id)">Rimuovi</button>  
+            <button mat-raised-button color="warn" (click)="deleteProfessore(element.id)">Rimuovi</button>  
         </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<button mat-raised-button color="primary" routerLink="/studente-form" routerLinkActive="active-link">Aggiungi un nuovo studente</button>
+<button mat-raised-button color="primary" routerLink="/professore-form" routerLinkActive="active-link">Aggiungi un nuovo professore</button>
 
 <form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" [hidden]="!isVisible">
-    <h1>Modifica lo studente {{studenteMod.id}}</h1>
+    <h1>Modifica il docente {{docenteMod.id}}</h1>
     <p>
         <mat-form-field appearance="outline">
             <mat-label>Nome</mat-label>
-            <input matInput placeholder="Inserisci il nome dello studente"  formControlName="name" value="{{studenteMod.name}}">
+            <input matInput placeholder="Inserisci il nome del docente"  formControlName="name" value="{{docenteMod.name}}">
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="outline">
             <mat-label>Cognome</mat-label>
-            <input matInput placeholder="Inserisci il cognome dello studente" formControlName="surname" value="{{studenteMod.surname}}">
+            <input matInput placeholder="Inserisci il cognome del docente" formControlName="surname" value="{{docenteMod.surname}}">
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="outline">
             <mat-label>Data di nascita</mat-label>
-            <input matInput placeholder="Inserisci la data di nascita dello studente" formControlName="birthdayDate" value="{{studenteMod.birthdayDate}}">
+            <input matInput placeholder="Inserisci la data di nascita del docente" formControlName="birthdayDate" value="{{docenteMod.birthdayDate}}">
             <mat-hint>yyyy-mm-dd</mat-hint>
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="outline">
             <mat-label>Comune di residenza</mat-label>
-            <input matInput placeholder="Inserisci il comune di residenza dello studente" formControlName="city" value="{{studenteMod.city}}">
+            <input matInput placeholder="Inserisci il comune di residenza del docente" formControlName="city" value="{{docenteMod.city}}">
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="outline">
             <mat-label>CAP</mat-label>
-            <input matInput placeholder="Inserisci il cap del comune di residenza" formControlName="cap" value="{{studenteMod.cap}}">
+            <input matInput placeholder="Inserisci il cap del comune di residenza" formControlName="cap" value="{{docenteMod.cap}}">
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="outline">
             <mat-label>Indirizzo</mat-label>
-            <input matInput placeholder="Inserisci l'indirizzo di residenza dello studente" formControlName="address" value="{{studenteMod.address}}">
+            <input matInput placeholder="Inserisci l'indirizzo di residenza del docente" formControlName="address" value="{{docenteMod.address}}">
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="outline">
             <mat-label>Numero civico</mat-label>
-            <input matInput placeholder="Inserisci il numero civico della residenza dello studente" formControlName="houseNumber" value="{{studenteMod.houseNumber}}">
+            <input matInput placeholder="Inserisci il numero civico della residenza del docente" formControlName="houseNumber" value="{{docenteMod.houseNumber}}">
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="outline">
             <mat-label>Codice fiscale</mat-label>
-            <input matInput placeholder="Inserisci il codice fiscale dello studente" formControlName="fiscalCode" value="{{studenteMod.fiscalCode}}">
+            <input matInput placeholder="Inserisci il codice fiscale del docente" formControlName="fiscalCode" value="{{docenteMod.fiscalCode}}">
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="outline">
             <mat-label>Telefono</mat-label>
-            <input matInput placeholder="Inserisci il numero di telefono dello studente" formControlName="number" value="{{studenteMod.number}}">
+            <input matInput placeholder="Inserisci il numero di telefono del docente" formControlName="number" value="{{docenteMod.number}}">
         </mat-form-field>
     </p>
 
-    <button mat-raised-button color="primary" class="form" type="submit">Modifica studente</button>
+    <button mat-raised-button color="primary" class="form" type="submit">Modifica docente</button>
 </form>

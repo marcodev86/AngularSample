@@ -1,0 +1,60 @@
+<form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+    <input placeholder="" id="id" type="hidden" />
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input matInput placeholder="Inserisci il nome dello studente"  formControlName="name">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Cognome</mat-label>
+            <input matInput placeholder="Inserisci il cognome dello studente" formControlName="surname">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Data di nascita</mat-label>
+            <input matInput placeholder="Inserisci la data di nascita dello studente" formControlName="birthdayDate">
+            <mat-hint>yyyy-mm-dd</mat-hint>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Comune di residenza</mat-label>
+            <input matInput placeholder="Inserisci il comune di residenza dello studente" formControlName="city">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>CAP</mat-label>
+            <input matInput placeholder="Inserisci il cap del comune di residenza" formControlName="cap">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Indirizzo</mat-label>
+            <input matInput placeholder="Inserisci l'indirizzo di residenza dello studente" formControlName="address">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Numero civico</mat-label>
+            <input matInput placeholder="Inserisci il numero civico della residenza dello studente" formControlName="houseNumber">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Codice fiscale</mat-label>
+            <input matInput placeholder="Inserisci il codice fiscale dello studente" formControlName="fiscalCode">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Telefono</mat-label>
+            <input matInput placeholder="Inserisci il numero di telefono dello studente" formControlName="number">
+        </mat-form-field>
+    </p>
+
+    <button mat-raised-button color="primary" class="form" type="submit">Aggiungi studente</button>
+</form>

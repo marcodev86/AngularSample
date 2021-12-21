@@ -1,0 +1,36 @@
+<form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input matInput placeholder="Inserisci il nome del corso" formControlName="name">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Descrizione</mat-label>
+            <input matInput placeholder="Inserisci una descrizione del corso" formControlName="description">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Docente</mat-label>
+            <input matInput placeholder="Inserisci il docente che terrà il corso" formControlName="professor">
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Data di inizio corso</mat-label>
+            <input matInput placeholder="Inserisci la data di inizio del corso" formControlName="startDate">
+            <mat-hint>yyyy-mm-dd</mat-hint>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Data di fine corso</mat-label>
+            <input matInput placeholder="Inserisci la data di fine del corso" formControlName="endDate">
+            <mat-hint>yyyy-mm-dd</mat-hint>
+        </mat-form-field>
+    </p>
+
+    <button mat-raised-button color="primary" class="form" type="submit">Aggiungi corso</button>
+</form>

@@ -1,32 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StudenteComponent } from './studente.component';
-import { StudenteRoutingModule } from './studente-routing.modules';
-import { StudenteDetailComponent } from '../studente-detail/studente-detail.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { ProfessoreRoutingModule } from './professore-routing.module';
+import { ProfessoreComponent } from './professore.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
-import {MatToolbarModule} from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
-
 
 
 @NgModule({
   declarations: [
-    StudenteComponent,
-    StudenteDetailComponent
+    ProfessoreComponent
   ],
   imports: [
     CommonModule,
-    StudenteRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    ProfessoreRoutingModule,
     MatButtonModule,
     MatTableModule,
     MatInputModule,
-    MatToolbarModule,
     HttpClientModule
   ]
 })
-export class StudenteModule { }
+export class ProfessoreModule { }

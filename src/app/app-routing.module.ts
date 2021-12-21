@@ -10,7 +10,12 @@ const routes: Routes = [
     path: 'studente',
     loadChildren: () => import('./modules/studente/studente.module').then(m => m.StudenteModule)
   },
-  { path: 'corso', loadChildren: () => import('./corso/corso.module').then(m => m.CorsoModule) }
+  { path: 'corso', loadChildren: () => import('./modules/corso/corso.module').then(m => m.CorsoModule) },
+  { path: 'professore', loadChildren: () => import('./modules/professore/professore.module').then(m => m.ProfessoreModule) },
+  { path: 'studente-form', loadChildren: () => import('./modules/studente-form/studente-form.module').then(m => m.StudenteFormModule) },
+  { path: 'professore-form', loadChildren: () => import('./modules/professore-form/professore-form.module').then(m => m.ProfessoreFormModule) },
+  { path: 'corso-form', loadChildren: () => import('./modules/corso-form/corso-form.module').then(m => m.CorsoFormModule) }
+
 ];
 
 @NgModule({
