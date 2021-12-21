@@ -8,5 +8,5 @@ export class StudenteServiceService {
 
   constructor() { }
 
-  public studenteCorrente = {} as Studente;
+  public studenteCorrente: Studente = {} as Studente;
 }

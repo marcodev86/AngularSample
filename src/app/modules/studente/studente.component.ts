@@ -107,6 +107,8 @@ export class StudenteComponent implements OnInit {
     this.isVisible = true;
     this.studenteMod = element;
     this.studenteService.studenteCorrente = element as Studente;
+    const currentUrl = this.router.url;
+    this.router.navigate([`/studente-form`]);
   }
 
   modifica(element:any) : Observable<Studente> {
