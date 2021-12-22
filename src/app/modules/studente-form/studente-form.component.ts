@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -21,9 +21,10 @@ const httpOptions = {
   styleUrls: ['./studente-form.component.sass']
 })
 
-export class StudenteFormComponent implements OnInit {
+export class StudenteFormComponent implements OnInit, OnDestroy {
   myDate = new Date();
   createdAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
+  updateAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
 
   public checkoutForm: FormGroup = {} as FormGroup;
   public isNew: boolean = false;
@@ -36,16 +37,26 @@ export class StudenteFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if(!this.studenteService.studenteCorrente) {
+    const id = this.studenteService?.getIdStudente();
+    if(!id) {
       this.isNew = true;
-    }
-    this.assignForm(this.studenteService.studenteCorrente);
+    } 
+    this.assignForm(this.studenteService.studenteCorrente);   
+  }
+
+  ngOnDestroy(): void {
+    this.studenteService.studenteCorrente = {} as Studente;
   }
 
   onSubmit(): void {
-    this.addStudente().subscribe(Response => console.log(Response));
-    console.log(this.checkoutForm.value);
-    this.checkoutForm.reset();
+    if(this.isNew) {
+      this.addStudente().subscribe(Response => console.log(Response));
+      console.log(this.checkoutForm.value);
+      this.checkoutForm.reset();
+    } else {
+      this.modifica(this.checkoutForm.value).subscribe();
+      this.checkoutForm.reset();
+    }
   }
 
   addStudente() : Observable<any> {
@@ -65,6 +76,25 @@ export class StudenteFormComponent implements OnInit {
       houseNumber: student?.houseNumber,
       createdAt: this.createdAt
     });
+  }
+
+  modifica(element:any) : Observable<Studente> {
+    
+    const studente = {
+      id: this.studenteService?.getIdStudente(),
+      name: element.name,
+      surname: element.surname,
+      birthdayDate: element.birthdayDate,
+      number: element.number,
+      fiscalCode: element.fiscalCode,
+      cap: element.cap,
+      city: element.city,
+      address: element.address,
+      houseNumber: element.houseNumber,
+      createdAt: this.createdAt,
+      updateAt: this.updateAt 
+    };
+    return this.httpClient.put<Studente>('http://localhost:8092/esercitazionePlansoft/student/update', studente, httpOptions);
   }
 
 }

@@ -107,32 +107,7 @@ export class StudenteComponent implements OnInit {
     this.isVisible = true;
     this.studenteMod = element;
     this.studenteService.studenteCorrente = element as Studente;
-    const currentUrl = this.router.url;
     this.router.navigate([`/studente-form`]);
-  }
-
-  modifica(element:any) : Observable<Studente> {
-    
-    const studente = {
-      id: this.studenteMod.id,
-      name: (element.name != '') ? element.name : this.studenteMod.name,
-      surname: (element.surname != '') ? element.surname : this.studenteMod.surname,
-      birthdayDate: (element.birthdayDate != '') ? element.birthdayDate : this.studenteMod.birthdayDate,
-      number: (element.number != '') ? element.number : this.studenteMod.number,
-      fiscalCode: (element.fiscalCode != '') ? element.fiscalCode : this.studenteMod.fiscalCode,
-      cap: (element.cap != '') ? element.cap : this.studenteMod.cap,
-      city: (element.city != '') ? element.city : this.studenteMod.city,
-      address: (element.address != '') ? element.address : this.studenteMod.address,
-      houseNumber: (element.houseNumber != '') ? element.houseNumber : this.studenteMod.houseNumber,
-      createdAt: this.studenteMod.createdAt,
-      updateAt: this.updateAt 
-    };
-    return this.httpClient.put<Studente>('http://localhost:8092/esercitazionePlansoft/student/update', studente, httpOptions);
-  }
-
-  onSubmit() {
-    this.modifica(this.checkoutForm.value).subscribe(Response => console.log(Response));
-    window.location.reload();
   }
 
 }

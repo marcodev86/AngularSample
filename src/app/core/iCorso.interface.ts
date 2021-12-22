@@ -1,23 +1,26 @@
 export interface ICorso {
-    nome: string;
-    descrizione: string;
-    docente: string;
-    dataDiInizio: string;
-    dataDiFine: string;
+    id: number;
+    name: string;
+    description: string;
+    professor: string;
+    startDate: string;
+    endDate: string;
 }
 
 export class Corso implements ICorso {
-    nome: string;
-    descrizione: string;
-    docente: string;
-    dataDiInizio: string;
-    dataDiFine: string;
+    id: number;
+    name: string;
+    description: string;
+    professor: string;
+    startDate: string;
+    endDate: string;
 
-    constructor(nome: string, descrizione: string, docente: string, dataDiInizio: string, dataDiFine: string) {
-        this.nome = nome;
-        this.descrizione = descrizione;
-        this.docente = docente;
-        this.dataDiInizio = dataDiInizio;
-        this.dataDiFine = dataDiFine;
+    constructor(id: number, name: string, description: string, professor: string, startDate: string, endDate: string) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.professor = professor;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 }

@@ -3,9 +3,11 @@ import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Professore } from 'src/app/core/iProfessore.interface';
+import { IProfessore, Professore } from 'src/app/core/iProfessore.interface';
+import { StudenteServiceService} from 'src/app/services/studente-service.service';
 import { formatDate} from '@angular/common';
 import { LOCALE_ID, Inject } from "@angular/core";
+import { MatTableDataSource } from '@angular/material/table';
 
 /* const professore: Professore[] = [{ nome: 'Pietro', cognome: 'Rossi', dataDiNascita: '1991-11-12', comune: 'Taranto', codiceFiscale: 'FGHJK45678', telefono: '3456789', cap: '45345', via: 'via gcdfsd', numeroCivico: '12'},
 { nome: 'Giacomo', cognome: 'Verdi',dataDiNascita: '1998-10-18', comune: 'Firenze', codiceFiscale: 'DFGHJK5678', telefono: '523525235', cap: '52454', via: 'via fwaegag', numeroCivico: '2' },
@@ -47,7 +49,7 @@ export class ProfessoreComponent implements OnInit {
   updateAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
 
   displayedColumns: string[] = ['id', 'nome', 'cognome', 'data', 'comune', 'codiceFiscale', 'telefono', 'cap', 'indirizzo', 'civico', 'azione'];
-  dataSource : any;
+  dataSource : MatTableDataSource<IProfessore> = new MatTableDataSource;
 
   checkoutForm = this.formBuilder.group({
     name: '',
@@ -67,12 +69,13 @@ export class ProfessoreComponent implements OnInit {
     private router: Router, 
     private formBuilder: FormBuilder,
     private httpClient: HttpClient,
-    @Inject(LOCALE_ID) public locale: string
+    @Inject(LOCALE_ID) public locale: string,
+    private studenteService : StudenteServiceService
   ) { }
 
   ngOnInit(): void {
     this.getProfessore().subscribe(Response => {
-      this.dataSource = Response;
+      this.dataSource = new MatTableDataSource<IProfessore>(Response);
     });
   }
 
@@ -85,37 +88,19 @@ export class ProfessoreComponent implements OnInit {
   }
 
   deleteProfessore(id: number) {
-    this.delete(id).subscribe(Response => console.log(Response));
-    window.location.reload();
+    this.delete(id).subscribe(Response => {
+      const data = this.dataSource.data;
+      const index = data.findIndex( x => x.id === id);
+      data.splice(index, 1);
+      this.dataSource._updateChangeSubscription();
+    });
   }
 
   startModify(element : any) {
     this.isVisible = true;
     this.docenteMod = element;
-  }
-
-  modifica(element:any) : Observable<Professore> {
-    
-    const docente = {
-      id: this.docenteMod.id,
-      name: (element.name != '') ? element.name : this.docenteMod.name,
-      surname: (element.surname != '') ? element.surname : this.docenteMod.surname,
-      birthdayDate: (element.birthdayDate != '') ? element.birthdayDate : this.docenteMod.birthdayDate,
-      number: (element.number != '') ? element.number : this.docenteMod.number,
-      fiscalCode: (element.fiscalCode != '') ? element.fiscalCode : this.docenteMod.fiscalCode,
-      cap: (element.cap != '') ? element.cap : this.docenteMod.cap,
-      city: (element.city != '') ? element.city : this.docenteMod.city,
-      address: (element.address != '') ? element.address : this.docenteMod.address,
-      houseNumber: (element.houseNumber != '') ? element.houseNumber : this.docenteMod.houseNumber,
-      createdAt: this.docenteMod.createdAt,
-      updateAt: this.updateAt 
-    };
-    return this.httpClient.put<Professore>('http://localhost:8092/esercitazionePlansoft/professor/update', docente, httpOptions);
-  }
-
-  onSubmit() {
-    this.modifica(this.checkoutForm.value).subscribe(Response => console.log(Response));
-    window.location.reload();
+    this.studenteService.professoreCorrente = element as Professore;
+    this.router.navigate([`/professore-form`]);
   }
 
 }

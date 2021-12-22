@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { StudenteFormRoutingModule } from './studente-form-routing.module';
 import { StudenteFormComponent } from './studente-form.component';
@@ -14,7 +13,6 @@ import { HttpClientModule } from '@angular/common/http';
     StudenteFormComponent
   ],
   imports: [
-    CommonModule,
     StudenteFormRoutingModule,
     FormsModule,
     ReactiveFormsModule,

@@ -1,35 +1,38 @@
 export interface IProfessore {
-    nome: string;
-    cognome: string;
-    dataDiNascita: string;
-    comune: string;
-    codiceFiscale: string;
-    telefono: string;
+    id: number;
+    name: string;
+    surname: string;
+    birthdayDate: string;
+    city: string;
+    fiscalCode: string;
+    number: string;
     cap: string;
-    via: string;
-    numeroCivico: string;
+    address: string;
+    houseNumber: string;
 }
 
 export class Professore implements IProfessore {
-    nome: string;
-    cognome: string;
-    dataDiNascita: string;
-    comune: string;
-    codiceFiscale: string;
-    telefono: string;
+    id: number;
+    name: string;
+    surname: string;
+    birthdayDate: string;
+    city: string;
+    fiscalCode: string;
+    number: string;
     cap: string;
-    via: string;
-    numeroCivico: string;
+    address: string;
+    houseNumber: string;
 
-    constructor(nome: string, cognome: string, dataDiNascita: string, comune: string, codiceFiscale: string, telefono: string, cap: string, via: string, numeroCivico: string) {
-        this.nome = nome;
-        this.cognome = cognome;
-        this.dataDiNascita = dataDiNascita;
-        this.comune = comune;
-        this.codiceFiscale = codiceFiscale;
-        this.telefono = telefono;
+    constructor(id: number, name: string, surname: string, birthdayDate: string, city: string, fiscalCode: string, telefono: string, cap: string, address: string, houseNumber: string) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.birthdayDate = birthdayDate;
+        this.city = city;
+        this.fiscalCode = fiscalCode;
+        this.number = telefono;
         this.cap = cap;
-        this.via = via;
-        this.numeroCivico = numeroCivico;
+        this.address = address;
+        this.houseNumber = houseNumber;
     }
 }

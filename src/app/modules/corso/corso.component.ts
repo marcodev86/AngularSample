@@ -3,9 +3,11 @@ import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { StudenteServiceService} from 'src/app/services/studente-service.service';
 import { formatDate} from '@angular/common';
 import { LOCALE_ID, Inject } from "@angular/core";
-import { Corso } from 'src/app/core/iCorso.interface';
+import { Corso, ICorso } from 'src/app/core/iCorso.interface';
+import { MatTableDataSource } from '@angular/material/table';
 
 /* const corso: Corso[] = [{nome: 'Informatica', descrizione: 'Questo corso insegna informatica', docente: 'Pietro Rossi', dataDiInizio: '2021-12-11', dataDiFine: '2022-12-11'},
 {nome: 'Analisi', descrizione: 'Questo corso insegna analisi matematica', docente: 'Giacomo Verdi', dataDiInizio: '2021-02-11', dataDiFine: '2022-02-11'},
@@ -42,7 +44,7 @@ export class CorsoComponent implements OnInit {
   updateAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
 
   displayedColumns: string[] = ['id', 'nome', 'descrizione', 'docente', 'dataDiInizio', 'dataDiFine', 'azione'];
-  dataSource : any;
+  dataSource : MatTableDataSource<ICorso> = new MatTableDataSource;
 
   checkoutForm = this.formBuilder.group({
     name: '',
@@ -58,12 +60,13 @@ export class CorsoComponent implements OnInit {
     private router: Router, 
     private httpClient: HttpClient,
     private formBuilder: FormBuilder,
-    @Inject(LOCALE_ID) public locale: string
+    @Inject(LOCALE_ID) public locale: string,
+    private studenteService : StudenteServiceService
   ) { }
 
   ngOnInit(): void {
     this.getCorso().subscribe(Response => {
-      this.dataSource = Response;
+      this.dataSource = new MatTableDataSource<ICorso>(Response);
     });
   }
 
@@ -76,13 +79,19 @@ export class CorsoComponent implements OnInit {
   }
 
   deleteCorso(id: number) {
-    this.delete(id).subscribe(Response => console.log(Response));
-    window.location.reload();
+    this.delete(id).subscribe(Response => {
+      const data = this.dataSource.data;
+      const index = data.findIndex( x => x.id === id);
+      data.splice(index, 1);
+      this.dataSource._updateChangeSubscription();
+    });
   }
 
   startModify(element : any) {
     this.isVisible = true;
     this.corsoMod = element;
+    this.studenteService.corsoCorrente = element as Corso;
+    this.router.navigate([`/corso-form`]);
   }
 
   modifica(element:any) : Observable<Corso> {
