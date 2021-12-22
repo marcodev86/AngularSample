@@ -1,1 +1,102 @@
-<p>studente-detail works!</p>
+<!-- (ngSubmit)="createStudente(studenteForm.value)" -->
+<!-- form fxLayout="column wrap" fxLayoutAlign="center center"
+            fxLayoutGap="10px"> 
+            <mat-card fxFlex="500px" fxFlex.xs="100%">
+      -->
+<form [formGroup]="studenteForm" class="my-form"(ngSubmit)="onSubmit()" autocomplete="on" novalidate>
+      <!--  -->
+
+
+      <p>
+            <mat-form-field class="sizemax" appearance="outline">
+                  <mat-label>Nome</mat-label>
+                  <input matInput type="text" placeholder="Inserisci il nome" formControlName="nome" id="nome">
+                  <!-- [ngModel]="studenteData.nome" -->
+                  <mat-hint align="end">Not more then 30 characters long.</mat-hint>
+                  <mat-error *ngIf="hasError('nome', 'required')">Is required</mat-error>
+                  <mat-error *ngIf="hasError('nome', 'maxlength')">You have more than 30 characters
+                  </mat-error>
+            </mat-form-field>
+      </p>
+      <p>
+            <mat-form-field class="sizemax" appearance="outline">
+                  <mat-label>Cognome</mat-label>
+                  <input matInput type="text" placeholder="Inserisci il cognome" formControlName="cognome" id="cognome">
+                  <mat-hint align="end">Not more then 30 characters long.</mat-hint>
+                  <mat-error *ngIf="hasError('cognome', 'required')">Is required</mat-error>
+                  <mat-error *ngIf="hasError('cognome', 'maxlength')">You have more than 30 characters
+                  </mat-error>
+            </mat-form-field>
+      </p>
+      <mat-form-field appearance="outline">
+            <mat-label>Data di nascita</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="Data di nascita" formControlName="date" id="date"
+                  readonly (click)="picker.open()">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+            <mat-label>Comune di nascita</mat-label>
+            <input type="text" matInput placeholder="Inserisci il comune di nascita" formControlName="comuneDiNascita"
+                  id="comune">
+            <mat-hint>Hint</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+            <mat-label>Codice fiscale</mat-label>
+            <input type="text" matInput placeholder="Inserisci il codice fiscale" formControlName="codiceFiscale">
+            <mat-hint>Hint</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="sizemax" appearance="outline">
+            <mat-label>Indirizzo</mat-label>
+            <input matInput placeholder="Inserisci l'indirizzo" formControlName="indirizzo">
+            <mat-hint>Hint</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+            <mat-label>Comune</mat-label>
+            <input matInput placeholder="Inserisci il comune" formControlName="comune">
+            <mat-hint>Hint</mat-hint>
+      </mat-form-field>
+<p>
+      <mat-form-field class="sizemin" appearance="outline">
+            <mat-label>Cap</mat-label>
+            <input type="text" matInput placeholder="Inserisci il cap" formControlName="cap">
+            <mat-hint>Hint</mat-hint>
+      </mat-form-field>
+
+</p>
+      <button mat-raised-button color="primary" [disabled]="!studenteForm.valid" type="submit">Create</button>
+      <!--  -->
+      <button type="button" mat-raised-button color="warn" onclick="reset()">Cancel</button><!-- (click)="onCancel() -->
+
+</form>
+
+<!-- <p>
+      <div class="example-container">
+            <mat-form-field appearance="fill">
+              <mat-label>Enter your email</mat-label>
+              <input matInput placeholder="pat@example.com" [formControl]="email" required>
+              <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+    </p> -->
+
+<!-- <h2>Reactive Form</h2>
+
+    <form [formGroup]="studenteForm" #formDir="ngForm">
+  
+    <input type="text" id="nome" class="form-control"
+      formControlName="nome" required>
+    </form> -->
+
+<!--  comuneDiNascita:'',
+    codiceFiscale:'',
+    indirizzo:'',
+    comune:'',
+    cap:'',
+    prov:'',
+    telefono:'', 
+    createdAt:'' -->
