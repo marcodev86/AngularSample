@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -19,7 +19,7 @@ const httpOptions = {
   templateUrl: './professore-form.component.html',
   styleUrls: ['./professore-form.component.sass']
 })
-export class ProfessoreFormComponent implements OnInit {
+export class ProfessoreFormComponent implements OnInit, OnDestroy {
 
   myDate = new Date();
   createdAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
@@ -41,6 +41,10 @@ export class ProfessoreFormComponent implements OnInit {
       this.isNew = true;
     } 
     this.assignForm(this.studenteService.professoreCorrente);   
+  }
+
+  ngOnDestroy(): void {
+    this.studenteService.professoreCorrente = {} as Professore;
   }
 
   onSubmit(): void {

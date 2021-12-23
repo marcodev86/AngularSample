@@ -51,7 +51,6 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if(this.isNew) {
       this.addStudente().subscribe(Response => console.log(Response));
-      console.log(this.checkoutForm.value);
       this.checkoutForm.reset();
     } else {
       this.modifica(this.checkoutForm.value).subscribe();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -78,6 +78,19 @@ export class StudenteComponent implements OnInit {
     this.getStudente().subscribe(Response => {
       this.dataSource = new MatTableDataSource<IStudente>(Response);
     });
+  }
+
+  /* ngOnChanges(changes: SimpleChanges): void {
+      if(changes) {
+        console.log(JSON.stringify(changes));
+      }
+  } */
+
+  filter(changes: any) : void{
+    if(changes) {
+      console.log(JSON.stringify(changes.target.value));
+      this.dataSource.filter = changes.target.value;
+    }
   }
 
   public clickedButton(event: Event): void {
