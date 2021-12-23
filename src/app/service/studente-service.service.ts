@@ -8,6 +8,6 @@ export class StudenteServiceService {
 
   constructor() { }
   
-  public studenteCorrente :Studente = {} as Studente;
+  public studenteCorrente : Studente = {} as Studente;
 
 }

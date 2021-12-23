@@ -9,10 +9,11 @@
 <div class="top-table">
   <div>
   <mat-form-field>
-    <input matInput type="search"  placeholder="Filter" id ="search" [(ngModel)] ="searchValue"><!--(keyup)="applyFilter($event.target.value) " -->
+    <input matInput type="search"  placeholder="Filter" id ="search" (change)="filter($event)"><!--(keyup)="applyFilter($event.target.value) "[(ngModel)] ="searchValue" -->
   </mat-form-field>
 </div>
-<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+<mat-paginator [length]="100"
+[pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page">
 </mat-paginator>
 </div>
 <table mat-table [dataSource]="dataSourceStudente" class="mat-elevation-z8">
@@ -92,8 +93,8 @@
 
 </table>
 <div class="container">
-<button mat-raised-button color="primary" routerLink="detail">Aggiungi un nuovo studente</button>
-<button mat-fab color="primary" routerLink="detail" ria-label="Aggiungi un nuovo studente">
+<button mat-raised-button color="primary" routerLink="/studente-detail">Aggiungi un nuovo studente</button>
+<button mat-fab color="primary" routerLink="detail">
   <mat-icon>add</mat-icon></button>
 <!-- <button mat-flat-button ></button> -->
 </div>

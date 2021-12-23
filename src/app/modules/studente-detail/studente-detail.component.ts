@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Studente } from 'src/app/core/iStudente.interface';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
@@ -19,7 +19,7 @@ const httpOptions = {
   styleUrls: ['./studente-detail.component.sass']
 })
 
-export class StudenteDetailComponent implements OnInit {
+export class StudenteDetailComponent implements OnInit, OnDestroy  {
 
   public studenteForm: FormGroup = {} as FormGroup;
   public isNew: boolean = false;
@@ -30,27 +30,35 @@ export class StudenteDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if(!this.studenteService.studenteCorrente) {
+    if(!this.studenteService?.studenteCorrente?.id) {
       this.isNew = true;
     }
     this.assignForm(this.studenteService.studenteCorrente);
-
+  }
+  ngOnDestroy(): void {
+      this.studenteService.studenteCorrente = {} as Studente;
+  }
+  /* ngAfterViewInit() {
     this.studenteForm = new FormGroup({
       nome: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       date: new FormControl(new Date()),
       cognome: new FormControl('', [Validators.required, Validators.maxLength(30)])
     });
-  
-    
-  }
+  }  */
+
   public hasError = (controlName: string, errorName: string) =>{
     return this.studenteForm.controls[controlName].hasError(errorName);
   }
   
   onSubmit(): void {
+    if(this.isNew){
     this.addStudente().subscribe(response => console.log(response));
     console.log(this.studenteForm.value);
-     this.studenteForm.reset();
+     this.studenteForm.reset();}
+     else{
+       
+
+     }
   }
 
   reset(): void{
@@ -61,18 +69,19 @@ export class StudenteDetailComponent implements OnInit {
     return this.httpClient.post<Studente>('http://localhost:8092/gestioneAnagraficaCorso/student/', this.studenteForm.value, httpOptions);
   }
 
-  assignForm(student : Studente) {
+  assignForm(studente : Studente) {
     this.studenteForm = this.formBuilder.group({
-      nome: student?.nome,
-      cognome: student?.cognome,
-      data: student?.data,
-      comuneDiNascita: student?.comuneDiNascita,
-      codiceFiscale: student?.codiceFiscale,
-      indirizzo: student?.indirizzo,
-      comune: student?.comune,
-      cap: student?.cap,
-      prov: student?.prov,
-      telefono: student?.telefono
+      id: studente?.id,
+      nome: new FormControl(studente?.nome,[Validators.required, Validators.maxLength(30)]),
+      cognome: studente?.cognome,
+      data: studente?.data,
+      comuneDiNascita: studente?.comuneDiNascita,
+      codiceFiscale: studente?.codiceFiscale,
+      indirizzo: studente?.indirizzo,
+      comune: studente?.comune,
+      cap: studente?.cap,
+      prov: studente?.prov,
+      telefono: studente?.telefono
     });
   }
 

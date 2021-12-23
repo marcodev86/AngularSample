@@ -13,9 +13,9 @@
                   <input matInput type="text" placeholder="Inserisci il nome" formControlName="nome" id="nome">
                   <!-- [ngModel]="studenteData.nome" -->
                   <mat-hint align="end">Not more then 30 characters long.</mat-hint>
-                  <mat-error *ngIf="hasError('nome', 'required')">Is required</mat-error>
+                 <!--  <mat-error *ngIf="hasError('nome', 'required')">Is required</mat-error>
                   <mat-error *ngIf="hasError('nome', 'maxlength')">You have more than 30 characters
-                  </mat-error>
+                  </mat-error> -->
             </mat-form-field>
       </p>
       <p>
@@ -23,14 +23,14 @@
                   <mat-label>Cognome</mat-label>
                   <input matInput type="text" placeholder="Inserisci il cognome" formControlName="cognome" id="cognome">
                   <mat-hint align="end">Not more then 30 characters long.</mat-hint>
-                  <mat-error *ngIf="hasError('cognome', 'required')">Is required</mat-error>
+                 <!--  <mat-error *ngIf="hasError('cognome', 'required')">Is required</mat-error>
                   <mat-error *ngIf="hasError('cognome', 'maxlength')">You have more than 30 characters
-                  </mat-error>
+                  </mat-error> -->
             </mat-form-field>
       </p>
       <mat-form-field appearance="outline">
             <mat-label>Data di nascita</mat-label>
-            <input matInput [matDatepicker]="picker" placeholder="Data di nascita" formControlName="date" id="date"
+            <input matInput [matDatepicker]="picker" placeholder="Data di nascita" formControlName="data" id="date"
                   readonly (click)="picker.open()">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -39,38 +39,46 @@
       <mat-form-field appearance="outline">
             <mat-label>Comune di nascita</mat-label>
             <input type="text" matInput placeholder="Inserisci il comune di nascita" formControlName="comuneDiNascita"
-                  id="comune">
+                  id="comuneDiNascita">
             <mat-hint>Hint</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
             <mat-label>Codice fiscale</mat-label>
-            <input type="text" matInput placeholder="Inserisci il codice fiscale" formControlName="codiceFiscale">
+            <input type="text" matInput placeholder="Inserisci il codice fiscale" formControlName="codiceFiscale" id="codiceFiscale">
             <mat-hint>Hint</mat-hint>
       </mat-form-field>
 
       <mat-form-field class="sizemax" appearance="outline">
             <mat-label>Indirizzo</mat-label>
-            <input matInput placeholder="Inserisci l'indirizzo" formControlName="indirizzo">
+            <input matInput placeholder="Inserisci l'indirizzo" formControlName="indirizzo" id="indirizzo">
             <mat-hint>Hint</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
             <mat-label>Comune</mat-label>
-            <input matInput placeholder="Inserisci il comune" formControlName="comune">
+            <input matInput placeholder="Inserisci il comune" formControlName="comune" id="comune">
             <mat-hint>Hint</mat-hint>
       </mat-form-field>
 <p>
       <mat-form-field class="sizemin" appearance="outline">
             <mat-label>Cap</mat-label>
-            <input type="text" matInput placeholder="Inserisci il cap" formControlName="cap">
+            <input type="text" matInput placeholder="Inserisci il cap" formControlName="cap" id="id">
             <mat-hint>Hint</mat-hint>
       </mat-form-field>
 
 </p>
-      <button mat-raised-button color="primary" [disabled]="!studenteForm.valid" type="submit">Create</button>
+<p>
+      <mat-form-field class="sizemin" appearance="outline">
+            <mat-label>Cap</mat-label>
+            <input type="text" matInput placeholder="Inserisci il cap" formControlName="telefono">
+            <mat-hint>Hint</mat-hint>
+      </mat-form-field>
+
+</p>
+      <button mat-raised-button color="primary" [disabled]="!studenteForm.valid" type="submit">Salva</button>
       <!--  -->
-      <button type="button" mat-raised-button color="warn" onclick="reset()">Cancel</button><!-- (click)="onCancel() -->
+      <button type="button" mat-raised-button color="warn" onclick="reset()">Cancella</button><!-- (click)="onCancel() -->
 
 </form>
 

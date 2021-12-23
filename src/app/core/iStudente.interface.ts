@@ -28,8 +28,7 @@ export class Studente implements IStudente {
     cap: string;
     prov: string;
     telefono: string;
-   
-   
+    
 
     constructor(id: number, nome: string, cognome: string, data: string, comuneDiNascita: string, codiceFiscale: string,
         indirizzo: string, comune: string, cap: string, prov: string, telefono: string) {
