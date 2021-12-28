@@ -6,6 +6,7 @@ import { CorsoComponent } from './corso.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -21,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     MatTableModule,
     MatInputModule,
+    MatIconModule,
     HttpClientModule
   ]
 })

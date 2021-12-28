@@ -1,7 +1,7 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IStudente, Studente } from 'src/app/core/iStudente.interface';
 import { StudenteServiceService} from 'src/app/services/studente-service.service';
@@ -9,62 +9,19 @@ import { formatDate} from '@angular/common';
 import { LOCALE_ID, Inject } from "@angular/core";
 import { MatTableDataSource } from '@angular/material/table';
 
-/* const studente: Studente[] = [{ nome: 'Marco', cognome: 'Micalizzi', dataDiNascita: '1991-11-12', comune: 'Messina', codiceFiscale: 'FGHJK45678', telefono: '3456789', cap: '45345', via: 'via gcdfsd', numeroCivico: '12'},
-{ nome: 'Luca', cognome: 'Sbragi',dataDiNascita: '1998-10-18', comune: 'Firenze', codiceFiscale: 'DFGHJK5678', telefono: '523525235', cap: '52454', via: 'via fwaegag', numeroCivico: '2' },
-{ nome: 'Ilenia', cognome: 'Concu', dataDiNascita: '1994-10-11', comune: 'Cagliari', codiceFiscale: 'ERTYUUFCVB4634', telefono: '3452657823', cap: '35423', via: 'via zasvfsdhg', numeroCivico: '14' }];
-*/
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  })
-};
-
 @Component({
   selector: 'app-studente',
   templateUrl: './studente.component.html',
   styleUrls: ['./studente.component.sass']
 })
 
-
-export class StudenteComponent implements OnInit {
-
-  isVisible = false;
-
-  studenteMod = {
-    id: '',
-    name: '',
-    surname: '',
-    birthdayDate: '',
-    number: '',
-    fiscalCode: '',
-    cap: '',
-    city: '',
-    address: '',
-    houseNumber: '',
-    createdAt: ''
-  };
+export class StudenteComponent implements OnInit, OnDestroy {
 
   myDate = new Date();
   updateAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
 
-  displayedColumns: string[] = ['id', 'nome', 'cognome', 'data', 'comune', 'codiceFiscale', 'telefono', 'cap', 'indirizzo', 'civico', 'azione'];
+  displayedColumns: string[] = ['id', 'nome', 'cognome', 'data', 'comune', 'codiceFiscale', 'telefono', 'cap', 'indirizzo', 'civico', 'modifica', 'rimuovi'];
   dataSource : MatTableDataSource<IStudente> = new MatTableDataSource;
-
-  checkoutForm = this.formBuilder.group({
-    name: '',
-    surname: '',
-    birthdayDate: '',
-    number: '',
-    fiscalCode: '',
-    cap: '',
-    city: '',
-    address: '',
-    houseNumber: '',
-    createdAt: this.studenteMod.createdAt,
-    updateAt: this.updateAt
-  });
 
   constructor(private router: Router, 
     private httpClient: HttpClient,
@@ -75,9 +32,14 @@ export class StudenteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getStudente().subscribe(Response => {
+    this.studenteService.getStudente().subscribe(Response => {
       this.dataSource = new MatTableDataSource<IStudente>(Response);
+      this.studenteService.dataSourceStudente = this.dataSource;
     });
+  }
+
+  ngOnDestroy(): void {
+      this.studenteService.dataSourceStudente = new MatTableDataSource;
   }
 
   /* ngOnChanges(changes: SimpleChanges): void {
@@ -91,16 +53,6 @@ export class StudenteComponent implements OnInit {
       console.log(JSON.stringify(changes.target.value));
       this.dataSource.filter = changes.target.value;
     }
-  }
-
-  public clickedButton(event: Event): void {
-    console.log(event)
-    const currentUrl = this.router.url;
-    this.router.navigate([`${currentUrl}/detail`]);
-  }
-
-  getStudente() : Observable<any>{
-    return this.httpClient.get('http://localhost:8092/esercitazionePlansoft/student/findAll');
   }
 
   delete(id: number) : Observable<unknown> {
@@ -117,8 +69,6 @@ export class StudenteComponent implements OnInit {
   }
 
   startModify(element : any) {
-    this.isVisible = true;
-    this.studenteMod = element;
     this.studenteService.studenteCorrente = element as Studente;
     this.router.navigate([`/studente-form`]);
   }

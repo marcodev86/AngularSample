@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { formatDate} from '@angular/common';
 import { LOCALE_ID, Inject } from "@angular/core";
 import { Corso } from 'src/app/core/iCorso.interface';
 import { StudenteServiceService} from 'src/app/services/studente-service.service';
+import { DateValidator } from 'src/app/shared/date.validator';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,6 +21,7 @@ const httpOptions = {
   templateUrl: './corso-form.component.html',
   styleUrls: ['./corso-form.component.sass']
 })
+
 export class CorsoFormComponent implements OnInit, OnDestroy {
 
   myDate = new Date();
@@ -44,6 +47,7 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
   }];
 
   constructor(
+    private router: Router,
     private httpClient: HttpClient,
     private formBuilder: FormBuilder,
     @Inject(LOCALE_ID) public locale: string,
@@ -51,22 +55,22 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.getProfessore().subscribe(Response => {
+    this.studenteService.getProfessore().subscribe(Response => {
       this.professor = Response;
     });
     const id = this.studenteService?.getIdCorso();
     if(!id) {
       this.isNew = true;
     } 
-    this.assignForm(this.studenteService.corsoCorrente);  
+    this.assignForm(this.studenteService.corsoCorrente);
   }
 
   ngOnDestroy(): void {
     this.studenteService.corsoCorrente = {} as Corso;
   }
 
-  getProfessore() : Observable<any>{
-    return this.httpClient.get('http://localhost:8092/esercitazionePlansoft/professor/findAll');
+  public hasError = (controlName: string, errorName: string) =>{
+    return this.checkoutForm.controls[controlName].hasError(errorName);
   }
 
   onSubmit(): void {
@@ -78,8 +82,16 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
       }
       this.addCorso().subscribe(Response => console.log(Response));
       this.checkoutForm.reset();
+      this.router.navigate([`/corso`]);
     } else {
-      /* da gestire */
+      for (let i = 0; i < this.professor.length; i++) {
+        if(this.professor[i].id == this.checkoutForm.value.professor) {
+          this.checkoutForm.value.professor = this.professor[i];
+        }
+      }
+      this.modifica(this.checkoutForm.value).subscribe();
+      this.checkoutForm.reset();
+      this.router.navigate([`/corso`]);
     }
   }
 
@@ -87,14 +99,29 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
     return this.httpClient.post<Corso>('http://localhost:8092/esercitazionePlansoft/course/save', this.checkoutForm.value, httpOptions);
   }
 
-  assignForm(corso : Corso) {
+  modifica(element:any) : Observable<Corso> {
+
+    const corso = {
+      id: this.studenteService?.getIdCorso(),
+      name: element.name,
+      description: element.description,
+      professor: element.professor,
+      startDate: element.startDate,
+      endDate: element.endDate,
+      createdAt: element.createdAt,
+      updateAt: this.updateAt 
+    };
+    return this.httpClient.put<Corso>('http://localhost:8092/esercitazionePlansoft/course/update', corso, httpOptions);
+  }
+
+  assignForm(corso : any) {
     this.checkoutForm = this.formBuilder.group({
-      name: corso?.name,
-      description: corso?.description,
+      name: new FormControl(corso?.name, [Validators.required, Validators.maxLength(100)]),
+      description: new FormControl(corso?.description, [Validators.required, Validators.maxLength(200)]),
       professor: corso?.professor,
-      startDate: corso?.startDate,
-      endDate: corso?.endDate,
-      createdAt: this.createdAt
+      startDate: new FormControl(corso?.startDate, [Validators.required, DateValidator.dateVaidator]),
+      endDate: new FormControl(corso?.endDate, [Validators.required, DateValidator.dateVaidator]),
+      createdAt: corso.createdAt ? corso.createdAt : this.createdAt
     });
   }
 

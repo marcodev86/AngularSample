@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -27,43 +27,13 @@ const httpOptions = {
   styleUrls: ['./professore.component.sass']
 })
 
-export class ProfessoreComponent implements OnInit {
-
-  isVisible = false;
-
-  docenteMod = {
-    id: '',
-    name: '',
-    surname: '',
-    birthdayDate: '',
-    number: '',
-    fiscalCode: '',
-    cap: '',
-    city: '',
-    address: '',
-    houseNumber: '',
-    createdAt: ''
-  };
+export class ProfessoreComponent implements OnInit, OnDestroy {
 
   myDate = new Date();
   updateAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
 
-  displayedColumns: string[] = ['id', 'nome', 'cognome', 'data', 'comune', 'codiceFiscale', 'telefono', 'cap', 'indirizzo', 'civico', 'azione'];
+  displayedColumns: string[] = ['id', 'nome', 'cognome', 'data', 'comune', 'codiceFiscale', 'telefono', 'cap', 'indirizzo', 'civico', 'modifica', 'rimuovi'];
   dataSource : MatTableDataSource<IProfessore> = new MatTableDataSource;
-
-  checkoutForm = this.formBuilder.group({
-    name: '',
-    surname: '',
-    birthdayDate: '',
-    number: '',
-    fiscalCode: '',
-    cap: '',
-    city: '',
-    address: '',
-    houseNumber: '',
-    createdAt: this.docenteMod.createdAt,
-    updateAt: this.updateAt
-  });
 
   constructor(
     private router: Router, 
@@ -74,13 +44,14 @@ export class ProfessoreComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getProfessore().subscribe(Response => {
+    this.studenteService.getProfessore().subscribe(Response => {
       this.dataSource = new MatTableDataSource<IProfessore>(Response);
+      this.studenteService.dataSourceProfessore = this.dataSource;
     });
   }
 
-  getProfessore() : Observable<any>{
-    return this.httpClient.get('http://localhost:8092/esercitazionePlansoft/professor/findAll');
+  ngOnDestroy(): void {
+    this.studenteService.dataSourceProfessore = new MatTableDataSource;
   }
 
   delete(id: number) : Observable<unknown> {
@@ -97,10 +68,15 @@ export class ProfessoreComponent implements OnInit {
   }
 
   startModify(element : any) {
-    this.isVisible = true;
-    this.docenteMod = element;
     this.studenteService.professoreCorrente = element as Professore;
     this.router.navigate([`/professore-form`]);
+  }
+
+  filter(changes: any) : void{
+    if(changes) {
+      console.log(JSON.stringify(changes.target.value));
+      this.dataSource.filter = changes.target.value;
+    }
   }
 
 }

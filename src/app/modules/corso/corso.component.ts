@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -26,35 +26,13 @@ const httpOptions = {
   styleUrls: ['./corso.component.sass']
 })
 
-export class CorsoComponent implements OnInit {
-
-  isVisible = false;
-
-  corsoMod = {
-    id: '',
-    name: '',
-    description: '',
-    professor: '',
-    startDate: '',
-    endDate: '',
-    createdAt: ''
-  };
+export class CorsoComponent implements OnInit, OnDestroy {
 
   myDate = new Date();
   updateAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
 
-  displayedColumns: string[] = ['id', 'nome', 'descrizione', 'docente', 'dataDiInizio', 'dataDiFine', 'azione'];
+  displayedColumns: string[] = ['id', 'nome', 'descrizione', 'docente', 'dataDiInizio', 'dataDiFine', 'modifica', 'rimuovi'];
   dataSource : MatTableDataSource<ICorso> = new MatTableDataSource;
-
-  checkoutForm = this.formBuilder.group({
-    name: '',
-    description: '',
-    professor: '',
-    startDate: '',
-    endDate: '',
-    createdAt: this.corsoMod.createdAt,
-    updateAt: this.updateAt
-  });
 
   constructor(
     private router: Router, 
@@ -65,13 +43,14 @@ export class CorsoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getCorso().subscribe(Response => {
+    this.studenteService.getCorso().subscribe(Response => {
       this.dataSource = new MatTableDataSource<ICorso>(Response);
+      this.studenteService.dataSourceCorso = this.dataSource;
     });
   }
 
-  getCorso() : Observable<any>{
-    return this.httpClient.get('http://localhost:8092/esercitazionePlansoft/course/findAll');
+  ngOnDestroy(): void {
+    this.studenteService.dataSourceCorso = new MatTableDataSource;
   }
 
   delete(id: number) : Observable<unknown> {
@@ -88,30 +67,16 @@ export class CorsoComponent implements OnInit {
   }
 
   startModify(element : any) {
-    this.isVisible = true;
-    this.corsoMod = element;
     this.studenteService.corsoCorrente = element as Corso;
     this.router.navigate([`/corso-form`]);
   }
 
-  modifica(element:any) : Observable<Corso> {
-    
-    const corso = {
-      id: this.corsoMod.id,
-      name: (element.name != '') ? element.name : this.corsoMod.name,
-      description: (element.description != '') ? element.description : this.corsoMod.description,
-      professor: (element.professor != '') ? element.professor : this.corsoMod.professor,
-      startDate: (element.startDate != '') ? element.startDate : this.corsoMod.startDate,
-      endDate: (element.endDate != '') ? element.endDate : this.corsoMod.endDate,
-      createdAt: this.corsoMod.createdAt,
-      updateAt: this.updateAt 
-    };
-    return this.httpClient.put<Corso>('http://localhost:8092/esercitazionePlansoft/course/update', corso, httpOptions);
-  }
 
-  onSubmit() {
-    this.modifica(this.checkoutForm.value).subscribe(Response => console.log(Response));
-    window.location.reload();
+  filter(changes: any) : void{
+    if(changes) {
+      console.log(JSON.stringify(changes.target.value));
+      this.dataSource.filter = changes.target.value;
+    }
   }
 
 }

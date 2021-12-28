@@ -1,0 +1,24 @@
+<form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Studente</mat-label>
+            <mat-select formControlName="studentDto">
+                <mat-option *ngFor="let s of student" [value]="s.id">
+                    {{s.name}} {{s.surname}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Corso</mat-label>
+            <mat-select formControlName="courseRegistrationDto">
+                <mat-option *ngFor="let c of course" [value]="c.id">
+                    {{c.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </p>
+
+    <button mat-raised-button color="primary" class="form" type="submit">Salva registrazione</button>
+</form>

@@ -3,18 +3,27 @@
         <mat-form-field appearance="outline">
             <mat-label>Nome</mat-label>
             <input matInput placeholder="Inserisci il nome del corso" formControlName="name">
+            <mat-error *ngIf="hasError('name', 'required')">Il nome del corso è richiesto</mat-error>
+            <mat-error *ngIf="hasError('name', 'maxlength')">Hai inserito più di 100 caratteri</mat-error>
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="outline">
             <mat-label>Descrizione</mat-label>
             <input matInput placeholder="Inserisci una descrizione del corso" formControlName="description">
+            <mat-error *ngIf="hasError('description', 'required')">La descrizione del corso è richiesta</mat-error>
+            <mat-error *ngIf="hasError('description', 'maxlength')">Hai inserito più di 200 caratteri</mat-error>
         </mat-form-field>
     </p>
     <p>
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="fill">
             <mat-label>Docente</mat-label>
-            <input matInput placeholder="Inserisci il docente che terrà il corso" formControlName="professor">
+            <mat-select formControlName="professor">
+                <mat-option *ngFor="let p of professor" [value]="p.id">
+                    {{p.name}} {{p.surname}}
+                </mat-option>
+            </mat-select>
+            <!-- <input matInput placeholder="Inserisci il docente che terrà il corso" formControlName="professor"> -->
         </mat-form-field>
     </p>
     <p>

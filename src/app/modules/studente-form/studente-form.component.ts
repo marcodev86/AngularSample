@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Studente } from 'src/app/core/iStudente.interface';
 import { formatDate} from '@angular/common';
 import { StudenteServiceService} from 'src/app/services/studente-service.service';
 import { LOCALE_ID, Inject } from "@angular/core";
+import { DateValidator } from 'src/app/shared/date.validator';
+import { Router } from '@angular/router';
 
 
 const httpOptions = {
@@ -30,6 +32,7 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
   public isNew: boolean = false;
  
   constructor(
+    private router: Router,
     private httpClient: HttpClient,
     private formBuilder: FormBuilder,
     @Inject(LOCALE_ID) public locale: string,
@@ -48,13 +51,19 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
     this.studenteService.studenteCorrente = {} as Studente;
   }
 
+  public hasError = (controlName: string, errorName: string) =>{
+    return this.checkoutForm.controls[controlName].hasError(errorName);
+  }
+
   onSubmit(): void {
     if(this.isNew) {
       this.addStudente().subscribe(Response => console.log(Response));
       this.checkoutForm.reset();
+      this.router.navigate([`/studente`]);
     } else {
       this.modifica(this.checkoutForm.value).subscribe();
       this.checkoutForm.reset();
+      this.router.navigate([`/studente`]);
     }
   }
 
@@ -62,19 +71,20 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
     return this.httpClient.post<Studente>('http://localhost:8092/esercitazionePlansoft/student/save', this.checkoutForm.value, httpOptions);
   }
 
-  assignForm(student : Studente) {
+  assignForm(student : any) {
     this.checkoutForm = this.formBuilder.group({
-      name: student?.name,
-      surname: student?.surname,
-      birthdayDate: student?.birthdayDate,
-      number: student?.number,
-      fiscalCode: student?.fiscalCode,
-      cap: student?.cap,
-      city: student?.city,
-      address: student?.address,
-      houseNumber: student?.houseNumber,
-      createdAt: this.createdAt
+      name: new FormControl(student?.name, [Validators.required, Validators.maxLength(50)]),
+      surname: new FormControl(student?.surname, [Validators.required, Validators.maxLength(60)]),
+      birthdayDate: new FormControl(student?.birthdayDate, [Validators.required, DateValidator.dateVaidator]),
+      number: new FormControl(student?.number, [Validators.required, Validators.maxLength(30)]),
+      fiscalCode: new FormControl(student?.fiscalCode, [Validators.required, Validators.maxLength(30)]),
+      cap: new FormControl(student?.cap, [Validators.required, Validators.maxLength(6)]),
+      city: new FormControl(student?.city, [Validators.required, Validators.maxLength(50)]),
+      address: new FormControl(student?.address, [Validators.required, Validators.maxLength(80)]),
+      houseNumber: new FormControl(student?.houseNumber, [Validators.required, Validators.maxLength(10)]),
+      createdAt: student.createdAt ? student.createdAt : this.createdAt
     });
+    console.log(this.checkoutForm);
   }
 
   modifica(element:any) : Observable<Studente> {
@@ -90,7 +100,7 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
       city: element.city,
       address: element.address,
       houseNumber: element.houseNumber,
-      createdAt: this.createdAt,
+      createdAt: element.createdAt,
       updateAt: this.updateAt 
     };
     return this.httpClient.put<Studente>('http://localhost:8092/esercitazionePlansoft/student/update', studente, httpOptions);

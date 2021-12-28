@@ -7,9 +7,10 @@ import { NavbarComponent } from './component/navbar/navbar.component';
 import { View1Component } from './view/view1/view1.component';
 import { ContentView2Component } from './view/view2/content-view2/content-view2.component';
 import { View2Component } from './view/view2/view2.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
+import { MatToolbarModule} from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 import { StudenteServiceService} from 'src/app/services/studente-service.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { StudenteServiceService} from 'src/app/services/studente-service.service
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
+    HttpClientModule
   ],
   providers: [StudenteServiceService],
   bootstrap: [AppComponent]
