@@ -9,9 +9,6 @@ import { LOCALE_ID, Inject } from "@angular/core";
 import { Corso, ICorso } from 'src/app/core/iCorso.interface';
 import { MatTableDataSource } from '@angular/material/table';
 
-/* const corso: Corso[] = [{nome: 'Informatica', descrizione: 'Questo corso insegna informatica', docente: 'Pietro Rossi', dataDiInizio: '2021-12-11', dataDiFine: '2022-12-11'},
-{nome: 'Analisi', descrizione: 'Questo corso insegna analisi matematica', docente: 'Giacomo Verdi', dataDiInizio: '2021-02-11', dataDiFine: '2022-02-11'},
-{nome: 'Geometria', descrizione: 'Questo corso insegna geometria', docente: 'Federica Gialli', dataDiInizio: '2021-10-11', dataDiFine: '2022-10-11'}]; */
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -44,7 +41,16 @@ export class CorsoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.studenteService.getCorso().subscribe(Response => {
+      for(let i of Response) {
+        if (i.professor == null) {
+          i.professor = {
+            name: '',
+            surname:''
+          }
+        }
+      }
       this.dataSource = new MatTableDataSource<ICorso>(Response);
+      console.log(this.dataSource);
       this.studenteService.dataSourceCorso = this.dataSource;
     });
   }
@@ -76,6 +82,7 @@ export class CorsoComponent implements OnInit, OnDestroy {
     if(changes) {
       console.log(JSON.stringify(changes.target.value));
       this.dataSource.filter = changes.target.value;
+      this.dataSource.filter.trim().toLowerCase();
     }
   }
 

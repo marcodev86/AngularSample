@@ -20,16 +20,16 @@ export class StudenteComponent implements OnInit, OnDestroy {
   myDate = new Date();
   updateAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
 
-  displayedColumns: string[] = ['id', 'nome', 'cognome', 'data', 'comune', 'codiceFiscale', 'telefono', 'cap', 'indirizzo', 'civico', 'modifica', 'rimuovi'];
+  displayedColumns: string[] = ['id', 'nome', 'cognome', 'data', 'comune', 'codiceFiscale', 'telefono', 'cap', 'indirizzo', 'civico', 'corso', 'modifica', 'rimuovi'];
   dataSource : MatTableDataSource<IStudente> = new MatTableDataSource;
 
-  constructor(private router: Router, 
-    private httpClient: HttpClient,
-    private formBuilder: FormBuilder,
-    @Inject(LOCALE_ID) public locale: string,
-    private studenteService : StudenteServiceService
-    ) {
-  }
+  constructor(
+      private router: Router, 
+      private httpClient: HttpClient,
+      private formBuilder: FormBuilder,
+      @Inject(LOCALE_ID) public locale: string,
+      private studenteService : StudenteServiceService
+  ) {}
 
   ngOnInit(): void {
     this.studenteService.getStudente().subscribe(Response => {
@@ -52,6 +52,7 @@ export class StudenteComponent implements OnInit, OnDestroy {
     if(changes) {
       console.log(JSON.stringify(changes.target.value));
       this.dataSource.filter = changes.target.value;
+      this.dataSource.filter.trim().toLowerCase();
     }
   }
 
@@ -71,6 +72,11 @@ export class StudenteComponent implements OnInit, OnDestroy {
   startModify(element : any) {
     this.studenteService.studenteCorrente = element as Studente;
     this.router.navigate([`/studente-form`]);
+  }
+
+  courses(element : any) {
+    this.studenteService.studenteCorrente = element as Studente;
+    this.router.navigate([`/registrations`]);
   }
 
 }

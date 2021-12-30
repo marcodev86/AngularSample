@@ -96,6 +96,11 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
   }
 
   addCorso() : Observable<any> {
+    if(this.checkDate(this.checkoutForm.value.startDate, this.checkoutForm.value.endDate)) {
+      let temp = this.checkoutForm.value.startDate;
+      this.checkoutForm.value.startDate = this.checkoutForm.value.endDate;
+      this.checkoutForm.value.endDate = temp;
+    }
     return this.httpClient.post<Corso>('http://localhost:8092/esercitazionePlansoft/course/save', this.checkoutForm.value, httpOptions);
   }
 
@@ -111,7 +116,21 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
       createdAt: element.createdAt,
       updateAt: this.updateAt 
     };
+
+    if(this.checkDate(corso.startDate, corso.endDate)) {
+      let temp = corso.startDate;
+      corso.startDate = corso.endDate;
+      corso.endDate = temp;
+    }
+
     return this.httpClient.put<Corso>('http://localhost:8092/esercitazionePlansoft/course/update', corso, httpOptions);
+  }
+
+  checkDate(date1 : string, date2 : string) {
+    let newDate1 = new Date(date1);
+    let newDate2 = new Date(date2);
+
+    return newDate1 > newDate2;
   }
 
   assignForm(corso : any) {

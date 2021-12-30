@@ -1,11 +1,11 @@
 <form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
     <h2>
-        Studente: {{student.name}} {{student.surname}}
+        Professore: {{professor.name}} {{professor.surname}}
     </h2>
     <p>
         <mat-form-field appearance="fill">
             <mat-label>Corso</mat-label>
-            <mat-select formControlName="courseRegistrationDto">
+            <mat-select formControlName="courses">
                 <mat-option *ngFor="let c of course" [value]="c.id">
                     {{c.name}}
                 </mat-option>

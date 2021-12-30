@@ -7,7 +7,7 @@ import { LOCALE_ID, Inject } from "@angular/core";
 import { StudenteServiceService} from 'src/app/services/studente-service.service';
 import { Studente } from 'src/app/core/iStudente.interface';
 import { Corso } from 'src/app/core/iCorso.interface';
-import { Registration } from 'src/app/core/iRegistration.interface';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,13 +25,15 @@ const httpOptions = {
 export class RegistrationFormComponent implements OnInit, OnDestroy {
 
   public checkoutForm: FormGroup = {} as FormGroup;
-  public student : Studente[] = [];
+  public student : Studente = {} as Studente;
   public course : Corso[] = [];
+  public studentCourses : Corso[] = [];
 
   myDate = new Date();
   createdAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
 
   constructor(
+    private router: Router,
     private httpClient: HttpClient,
     private formBuilder: FormBuilder,
     @Inject(LOCALE_ID) public locale: string,
@@ -39,24 +41,38 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.studenteService.getStudente().subscribe( Response => {
-      this.student = Response;
+    const id = this.studenteService?.getIdStudente();
+    let isThere : boolean = false;
+
+    this.student = this.studenteService.studenteCorrente;
+    this.studenteService.getRegistration(id).subscribe( Response => {
+      for(let c of Response.courseRegistrationDto) {
+        this.studentCourses.push(c.courseDto);
+      }
     } );
+    
     this.studenteService.getCorso().subscribe( Response => {
-      this.course = Response;
+      for(let c of Response) {
+        for(let cs of this.studentCourses) {
+          if (c.id === cs.id) {
+            isThere = true;
+          }   
+        }
+        if(!isThere) {
+          this.course.push(c);
+        }
+        isThere = false;
+      }
     } );
     this.assignForm();
   }
 
   ngOnDestroy(): void {
+    this.studenteService.studenteCorrente = {} as Studente;
   }
 
   onSubmit(): void {
-    for (let i = 0; i < this.student.length; i++) {
-      if(this.student[i].id === this.checkoutForm.value.studentDto) {
-        this.checkoutForm.value.studentDto = this.student[i];
-      }
-    }
+    this.checkoutForm.value.studentDto = this.student;
     for (let i = 0; i < this.course.length; i++) {
       if(this.course[i].id === this.checkoutForm.value.courseRegistrationDto) {
         this.checkoutForm.value.courseRegistrationDto = [{
@@ -67,6 +83,7 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
     }
     this.addRegistration().subscribe(Response => console.log(Response));
     this.checkoutForm.reset();
+    this.router.navigate([`/studente`]);
   }
 
   addRegistration() : Observable<any>{

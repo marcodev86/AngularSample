@@ -47,11 +47,8 @@ export class StudenteServiceService{
     return this.httpClient.get('http://localhost:8092/esercitazionePlansoft/course/findAll');
   }
 
-  public getRegistration(): Observable<any>{
-    this.getStudente().subscribe( Response => {
-      this.dataSourceStudente = new MatTableDataSource<IStudente>(Response);;
-    } )
-    return this.httpClient.get('http://localhost:8092/esercitazionePlansoft/courseRegistration/getRegistrationByStudentId/81');
+  public getRegistration(id : any): Observable<any>{
+    return this.httpClient.get(`http://localhost:8092/esercitazionePlansoft/courseRegistration/getRegistrationByStudentId/${id}`);
   }
   
 }

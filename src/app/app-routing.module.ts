@@ -12,8 +12,9 @@ const routes: Routes = [
   { path: 'studente-form', loadChildren: () => import('./modules/studente-form/studente-form.module').then(m => m.StudenteFormModule) },
   { path: 'professore-form', loadChildren: () => import('./modules/professore-form/professore-form.module').then(m => m.ProfessoreFormModule) },
   { path: 'corso-form', loadChildren: () => import('./modules/corso-form/corso-form.module').then(m => m.CorsoFormModule) },
-  { path: 'registration', loadChildren: () => import('./modules/registration/registration.module').then(m => m.RegistrationModule) },
-  { path: 'registration-form', loadChildren: () => import('./modules/registration-form/registration-form.module').then(m => m.RegistrationFormModule) }
+  { path: 'registration-form', loadChildren: () => import('./modules/registration-form/registration-form.module').then(m => m.RegistrationFormModule) },
+  { path: 'insegnamento-form', loadChildren: () => import('./modules/insegnamento-form/insegnamento-form.module').then(m => m.InsegnamentoFormModule) },
+  { path: 'registrations', loadChildren: () => import('./modules/registrations/registrations.module').then(m => m.RegistrationsModule) }
 ];
 
 @NgModule({

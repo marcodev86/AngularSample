@@ -1,31 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RegistrationsRoutingModule } from './registrations-routing.module';
+import { RegistrationsComponent } from './registrations.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RegistrationRoutingModule } from './registration-routing.module';
-import { RegistrationComponent } from './registration.component';
 
 
 @NgModule({
   declarations: [
-    RegistrationComponent
+    RegistrationsComponent
   ],
   imports: [
     CommonModule,
-    RegistrationRoutingModule,
+    RegistrationsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatTableModule,
     MatInputModule,
-    MatToolbarModule,
     MatIconModule,
     HttpClientModule
   ]
 })
-export class RegistrationModule { }
+export class RegistrationsModule { }

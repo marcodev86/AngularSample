@@ -32,7 +32,7 @@ export class ProfessoreComponent implements OnInit, OnDestroy {
   myDate = new Date();
   updateAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
 
-  displayedColumns: string[] = ['id', 'nome', 'cognome', 'data', 'comune', 'codiceFiscale', 'telefono', 'cap', 'indirizzo', 'civico', 'modifica', 'rimuovi'];
+  displayedColumns: string[] = ['id', 'nome', 'cognome', 'data', 'comune', 'codiceFiscale', 'telefono', 'cap', 'indirizzo', 'civico', 'corso', 'modifica', 'rimuovi'];
   dataSource : MatTableDataSource<IProfessore> = new MatTableDataSource;
 
   constructor(
@@ -76,7 +76,13 @@ export class ProfessoreComponent implements OnInit, OnDestroy {
     if(changes) {
       console.log(JSON.stringify(changes.target.value));
       this.dataSource.filter = changes.target.value;
+      this.dataSource.filter.trim().toLowerCase();
     }
+  }
+
+  addCourse(element : any) {
+    this.studenteService.professoreCorrente = element as Professore;
+    this.router.navigate(['insegnamento-form']);
   }
 
 }
