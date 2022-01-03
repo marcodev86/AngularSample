@@ -63,7 +63,7 @@ export class ProfessoreFormComponent implements OnInit, OnDestroy {
     } else {
       this.modifica(this.checkoutForm.value).subscribe();
       this.checkoutForm.reset();
-      this.router.navigate([`/professore`]);
+      setTimeout( () => this.router.navigate([`/professore`]), 0);
     }
   }
 

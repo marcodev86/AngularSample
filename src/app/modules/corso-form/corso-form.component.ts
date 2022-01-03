@@ -91,7 +91,7 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
       }
       this.modifica(this.checkoutForm.value).subscribe();
       this.checkoutForm.reset();
-      this.router.navigate([`/corso`]);
+      setTimeout( () => this.router.navigate([`/corso`]), 0);
     }
   }
 
@@ -105,6 +105,7 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
   }
 
   modifica(element:any) : Observable<Corso> {
+    const idCorso = this.studenteService?.getIdCorso();
 
     const corso = {
       id: this.studenteService?.getIdCorso(),
@@ -123,7 +124,7 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
       corso.endDate = temp;
     }
 
-    return this.httpClient.put<Corso>('http://localhost:8092/esercitazionePlansoft/course/update', corso, httpOptions);
+    return this.httpClient.put<Corso>(`http://localhost:8092/esercitazionePlansoft/course/updateCourseById/${idCorso}`, corso, httpOptions);
   }
 
   checkDate(date1 : string, date2 : string) {

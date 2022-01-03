@@ -63,7 +63,7 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
     } else {
       this.modifica(this.checkoutForm.value).subscribe();
       this.checkoutForm.reset();
-      this.router.navigate([`/studente`]);
+      setTimeout( () => this.router.navigate([`/studente`]), 0);
     }
   }
 
@@ -88,6 +88,8 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
   }
 
   modifica(element:any) : Observable<Studente> {
+
+    const studentId = this.studenteService?.getIdStudente();
     
     const studente = {
       id: this.studenteService?.getIdStudente(),
@@ -103,7 +105,7 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
       createdAt: element.createdAt,
       updateAt: this.updateAt 
     };
-    return this.httpClient.put<Studente>('http://localhost:8092/esercitazionePlansoft/student/update', studente, httpOptions);
+    return this.httpClient.put<Studente>(`http://localhost:8092/esercitazionePlansoft/student/updateStudentById/${studentId}`, studente, httpOptions);
   }
 
 }
