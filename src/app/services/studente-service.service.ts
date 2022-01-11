@@ -39,6 +39,10 @@ export class StudenteServiceService{
     return this.httpClient.get('http://localhost:8092/esercitazionePlansoft/student/findAll');
   }
 
+  public getStudentById(id : any) : Observable<any> {
+    return this.httpClient.get(`http://localhost:8092/esercitazionePlansoft/student/findById/${id}`)
+  }
+
   public getProfessore() : Observable<any>{
     return this.httpClient.get('http://localhost:8092/esercitazionePlansoft/professor/findAll');
   }
@@ -47,8 +51,12 @@ export class StudenteServiceService{
     return this.httpClient.get('http://localhost:8092/esercitazionePlansoft/course/findAll');
   }
 
+  public getCorsoById(id : any) : Observable<any> {
+    return this.httpClient.get(`http://localhost:8092/esercitazionePlansoft/course/findById/${id}`);
+  }
+
   public getRegistration(id : any): Observable<any>{
     return this.httpClient.get(`http://localhost:8092/esercitazionePlansoft/courseRegistration/getRegistrationByStudentId/${id}`);
   }
-  
+
 }

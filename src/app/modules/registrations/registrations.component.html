@@ -1,5 +1,5 @@
 <div>
-    <h3> Corsi seguiti da 
+    <h3> Corsi seguiti da
         <br>
         <h2>{{student.name}} {{student.surname}}</h2>
     </h3>
@@ -39,6 +39,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<button mat-fab id="add" color="primary"  routerLink="/registration-form" routerLinkActive="active-link">
+<button mat-fab id="add" color="primary" (click)="addCourse()">
     <mat-icon>library_add</mat-icon>
 </button>

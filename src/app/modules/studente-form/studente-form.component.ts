@@ -30,7 +30,7 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
 
   public checkoutForm: FormGroup = {} as FormGroup;
   public isNew: boolean = false;
- 
+
   constructor(
     private router: Router,
     private httpClient: HttpClient,
@@ -43,8 +43,8 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
     const id = this.studenteService?.getIdStudente();
     if(!id) {
       this.isNew = true;
-    } 
-    this.assignForm(this.studenteService.studenteCorrente);   
+    }
+    this.assignForm(this.studenteService.studenteCorrente);
   }
 
   ngOnDestroy(): void {
@@ -58,12 +58,12 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if(this.isNew) {
       this.addStudente().subscribe(Response => console.log(Response));
-      this.checkoutForm.reset();
-      this.router.navigate([`/studente`]);
+      //this.checkoutForm.reset();
+      //this.router.navigate([`/studente`]);
     } else {
       this.modifica(this.checkoutForm.value).subscribe();
-      this.checkoutForm.reset();
-      setTimeout( () => this.router.navigate([`/studente`]), 0);
+      //this.checkoutForm.reset();
+      //setTimeout( () => this.router.navigate([`/studente`]), 100);
     }
   }
 
@@ -90,7 +90,7 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
   modifica(element:any) : Observable<Studente> {
 
     const studentId = this.studenteService?.getIdStudente();
-    
+
     const studente = {
       id: this.studenteService?.getIdStudente(),
       name: element.name,
@@ -103,7 +103,7 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
       address: element.address,
       houseNumber: element.houseNumber,
       createdAt: element.createdAt,
-      updateAt: this.updateAt 
+      updateAt: this.updateAt
     };
     return this.httpClient.put<Studente>(`http://localhost:8092/esercitazionePlansoft/student/updateStudentById/${studentId}`, studente, httpOptions);
   }

@@ -1,75 +1,84 @@
-<form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
-    <p>
-        <mat-form-field appearance="outline">
-            <mat-label>Nome</mat-label>
-            <input matInput placeholder="Inserisci il nome del professore" formControlName="name">
-            <mat-error *ngIf="hasError('name', 'required')">Il nome è richiesto</mat-error>
-            <mat-error *ngIf="hasError('name', 'maxlength')">Hai inserito più di 50 caratteri</mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="outline">
-            <mat-label>Cognome</mat-label>
-            <input matInput placeholder="Inserisci il cognome del professore" formControlName="surname">
-            <mat-error *ngIf="hasError('surname', 'required')">Il cognome è richiesto</mat-error>
-            <mat-error *ngIf="hasError('surname', 'maxlength')">Hai inserito più di 60 caratteri</mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="outline">
-            <mat-label>Data di nascita</mat-label>
-            <input matInput placeholder="Inserisci la data di nascita del professore" formControlName="birthdayDate">
-            <mat-hint>yyyy-mm-dd</mat-hint>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="outline">
-            <mat-label>Comune di residenza</mat-label>
-            <input matInput placeholder="Inserisci il comune di residenza del professore" formControlName="city">
-            <mat-error *ngIf="hasError('city', 'required')">Il comune di residenza è richiesto</mat-error>
-            <mat-error *ngIf="hasError('city', 'maxlength')">Hai inserito più di 50 caratteri</mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="outline">
-            <mat-label>CAP</mat-label>
-            <input matInput placeholder="Inserisci il cap del comune di residenza" formControlName="cap">
-            <mat-error *ngIf="hasError('cap', 'required')">Il Cap è richiesto</mat-error>
-            <mat-error *ngIf="hasError('cap', 'maxlength')">Hai inserito più di 6 caratteri</mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="outline">
-            <mat-label>Indirizzo</mat-label>
-            <input matInput placeholder="Inserisci l'indirizzo di residenza del professore" formControlName="address">
-            <mat-error *ngIf="hasError('address', 'required')">L'indirizzo di residenza è richiesto</mat-error>
-            <mat-error *ngIf="hasError('address', 'maxlength')">Hai inserito più di 80 caratteri</mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="outline">
-            <mat-label>Numero civico</mat-label>
-            <input matInput placeholder="Inserisci il numero civico della residenza del professore" formControlName="houseNumber">
-            <mat-error *ngIf="hasError('houseNumber', 'required')">Il numero civico è richiesto</mat-error>
-            <mat-error *ngIf="hasError('houseNumber', 'maxlength')">Hai inserito più di 10 caratteri</mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="outline">
-            <mat-label>Codice fiscale</mat-label>
-            <input matInput placeholder="Inserisci il codice fiscale del professore" formControlName="fiscalCode">
-            <mat-error *ngIf="hasError('fiscalCode', 'required')">Il codice fiscale è richiesto</mat-error>
-            <mat-error *ngIf="hasError('fiscalCode', 'maxlength')">Hai inserito più di 30 caratteri</mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="outline">
-            <mat-label>Telefono</mat-label>
-            <input matInput placeholder="Inserisci il numero di telefono del professore" formControlName="number">
-            <mat-error *ngIf="hasError('number', 'required')">Il numero di telefono è richiesto</mat-error>
-            <mat-error *ngIf="hasError('number', 'maxlength')">Hai inserito più di 30 caratteri</mat-error>
-        </mat-form-field>
-    </p>
+<mat-dialog-content class="mat-typography">
+  <div id="title">
+    <h1 *ngIf="isNew==true">Aggiungi un nuovo docente</h1>
+    <h1 *ngIf="isNew==false">Modifica il docente</h1>
+  </div>
+  <form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+      <p>
+          <mat-form-field appearance="outline">
+              <mat-label>Nome</mat-label>
+              <input matInput placeholder="Inserisci il nome del professore" formControlName="name">
+              <mat-error *ngIf="hasError('name', 'required')">Il nome è richiesto</mat-error>
+              <mat-error *ngIf="hasError('name', 'maxlength')">Hai inserito più di 50 caratteri</mat-error>
+          </mat-form-field>
+      </p>
+      <p>
+          <mat-form-field appearance="outline">
+              <mat-label>Cognome</mat-label>
+              <input matInput placeholder="Inserisci il cognome del professore" formControlName="surname">
+              <mat-error *ngIf="hasError('surname', 'required')">Il cognome è richiesto</mat-error>
+              <mat-error *ngIf="hasError('surname', 'maxlength')">Hai inserito più di 60 caratteri</mat-error>
+          </mat-form-field>
+      </p>
+      <p>
+          <mat-form-field appearance="outline">
+              <mat-label>Data di nascita</mat-label>
+              <input matInput placeholder="Inserisci la data di nascita del professore" formControlName="birthdayDate">
+              <mat-hint>yyyy-mm-dd</mat-hint>
+          </mat-form-field>
+      </p>
+      <p>
+          <mat-form-field appearance="outline">
+              <mat-label>Comune di residenza</mat-label>
+              <input matInput placeholder="Inserisci il comune di residenza del professore" formControlName="city">
+              <mat-error *ngIf="hasError('city', 'required')">Il comune di residenza è richiesto</mat-error>
+              <mat-error *ngIf="hasError('city', 'maxlength')">Hai inserito più di 50 caratteri</mat-error>
+          </mat-form-field>
+      </p>
+      <p>
+          <mat-form-field appearance="outline">
+              <mat-label>CAP</mat-label>
+              <input matInput placeholder="Inserisci il cap del comune di residenza" formControlName="cap">
+              <mat-error *ngIf="hasError('cap', 'required')">Il Cap è richiesto</mat-error>
+              <mat-error *ngIf="hasError('cap', 'maxlength')">Hai inserito più di 6 caratteri</mat-error>
+          </mat-form-field>
+      </p>
+      <p>
+          <mat-form-field appearance="outline">
+              <mat-label>Indirizzo</mat-label>
+              <input matInput placeholder="Inserisci l'indirizzo di residenza del professore" formControlName="address">
+              <mat-error *ngIf="hasError('address', 'required')">L'indirizzo di residenza è richiesto</mat-error>
+              <mat-error *ngIf="hasError('address', 'maxlength')">Hai inserito più di 80 caratteri</mat-error>
+          </mat-form-field>
+      </p>
+      <p>
+          <mat-form-field appearance="outline">
+              <mat-label>Numero civico</mat-label>
+              <input matInput placeholder="Inserisci il numero civico della residenza del professore" formControlName="houseNumber">
+              <mat-error *ngIf="hasError('houseNumber', 'required')">Il numero civico è richiesto</mat-error>
+              <mat-error *ngIf="hasError('houseNumber', 'maxlength')">Hai inserito più di 10 caratteri</mat-error>
+          </mat-form-field>
+      </p>
+      <p>
+          <mat-form-field appearance="outline">
+              <mat-label>Codice fiscale</mat-label>
+              <input matInput placeholder="Inserisci il codice fiscale del professore" formControlName="fiscalCode">
+              <mat-error *ngIf="hasError('fiscalCode', 'required')">Il codice fiscale è richiesto</mat-error>
+              <mat-error *ngIf="hasError('fiscalCode', 'maxlength')">Hai inserito più di 30 caratteri</mat-error>
+          </mat-form-field>
+      </p>
+      <p>
+          <mat-form-field appearance="outline">
+              <mat-label>Telefono</mat-label>
+              <input matInput placeholder="Inserisci il numero di telefono del professore" formControlName="number">
+              <mat-error *ngIf="hasError('number', 'required')">Il numero di telefono è richiesto</mat-error>
+              <mat-error *ngIf="hasError('number', 'maxlength')">Hai inserito più di 30 caratteri</mat-error>
+          </mat-form-field>
+      </p>
 
-    <button mat-raised-button color="primary" class="form" type="submit">Salva docente</button>
-</form>
+      <mat-dialog-actions align="center">
+        <button mat-raised-button mat-dialog-close>Indietro</button>
+        <button mat-raised-button [mat-dialog-close]="true" color="primary" class="form" type="submit">Salva docente</button>
+      </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

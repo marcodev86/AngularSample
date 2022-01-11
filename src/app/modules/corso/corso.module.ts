@@ -8,22 +8,24 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
+import {CorsoFormModule} from "../corso-form/corso-form.module";
 
 
 @NgModule({
   declarations: [
     CorsoComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CorsoRoutingModule,
-    MatButtonModule,
-    MatTableModule,
-    MatInputModule,
-    MatIconModule,
-    HttpClientModule
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CorsoRoutingModule,
+        MatButtonModule,
+        MatTableModule,
+        MatInputModule,
+        MatIconModule,
+        HttpClientModule,
+        CorsoFormModule
+    ]
 })
 export class CorsoModule { }

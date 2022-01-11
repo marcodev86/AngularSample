@@ -9,8 +9,10 @@ import { ContentView2Component } from './view/view2/content-view2/content-view2.
 import { View2Component } from './view/view2/view2.component';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 import { StudenteServiceService} from 'src/app/services/studente-service.service';
 import { HttpClientModule } from '@angular/common/http';
+import {InsegnamentoFormComponent} from "./modules/insegnamento-form/insegnamento-form.component";
 
 
 @NgModule({
@@ -27,9 +29,11 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSelectModule
   ],
   providers: [StudenteServiceService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[InsegnamentoFormComponent]
 })
 export class AppModule { }

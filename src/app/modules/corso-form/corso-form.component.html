@@ -1,4 +1,8 @@
-<form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+<div id="title">
+  <h1 *ngIf="isNew==true">Aggiungi un nuovo corso</h1>
+  <h1 *ngIf="isNew==false">Modifica il corso {{id}}</h1>
+</div>
+<form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit($event)">
     <p>
         <mat-form-field appearance="outline">
             <mat-label>Nome</mat-label>
@@ -41,5 +45,6 @@
         </mat-form-field>
     </p>
 
+    <button mat-raised-button (click)="clickEvent($event)">Indietro</button>
     <button mat-raised-button color="primary" class="form" type="submit">Salva corso</button>
 </form>

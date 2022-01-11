@@ -8,11 +8,9 @@ import { StudenteServiceService} from 'src/app/services/studente-service.service
 import { formatDate} from '@angular/common';
 import { LOCALE_ID, Inject } from "@angular/core";
 import { MatTableDataSource } from '@angular/material/table';
-
-/* const professore: Professore[] = [{ nome: 'Pietro', cognome: 'Rossi', dataDiNascita: '1991-11-12', comune: 'Taranto', codiceFiscale: 'FGHJK45678', telefono: '3456789', cap: '45345', via: 'via gcdfsd', numeroCivico: '12'},
-{ nome: 'Giacomo', cognome: 'Verdi',dataDiNascita: '1998-10-18', comune: 'Firenze', codiceFiscale: 'DFGHJK5678', telefono: '523525235', cap: '52454', via: 'via fwaegag', numeroCivico: '2' },
-{ nome: 'Federica', cognome: 'Gialli', dataDiNascita: '1994-10-11', comune: 'Milano', codiceFiscale: 'ERTYUUFCVB4634', telefono: '3452657823', cap: '35423', via: 'via zasvfsdhg', numeroCivico: '14' }];
-*/
+import {MatDialog} from '@angular/material/dialog';
+import {ProfessoreFormComponent} from "../professore-form/professore-form.component";
+import {InsegnamentoFormComponent} from "../insegnamento-form/insegnamento-form.component";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -36,11 +34,12 @@ export class ProfessoreComponent implements OnInit, OnDestroy {
   dataSource : MatTableDataSource<IProfessore> = new MatTableDataSource;
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private formBuilder: FormBuilder,
     private httpClient: HttpClient,
     @Inject(LOCALE_ID) public locale: string,
-    private studenteService : StudenteServiceService
+    private studenteService : StudenteServiceService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -69,7 +68,45 @@ export class ProfessoreComponent implements OnInit, OnDestroy {
 
   startModify(element : any) {
     this.studenteService.professoreCorrente = element as Professore;
-    this.router.navigate([`/professore-form`]);
+    //this.router.navigate([`/professore-form`]);
+    const dialogRef = this.dialog.open(ProfessoreFormComponent, {
+      height: '700px',
+      width: '1000px',
+    });
+
+    dialogRef.afterClosed().subscribe( () => {
+      this.studenteService.getProfessore().subscribe(Response => {
+        this.dataSource = new MatTableDataSource<IProfessore>(Response);
+        this.studenteService.dataSourceProfessore = this.dataSource;
+      });
+    });
+  }
+
+  addCourse(element : any) {
+    this.studenteService.professoreCorrente = element as Professore;
+    //this.router.navigate(['insegnamento-form']);
+    console.log('ciao');
+    const dialogRef = this.dialog.open(InsegnamentoFormComponent, {
+      height: '250px',
+      width: '1000px',
+    });
+    dialogRef.afterClosed().subscribe();
+  }
+
+  addProfessor() {
+    const dialogRef = this.dialog.open(ProfessoreFormComponent, {
+      height: '700px',
+      width: '1000px',
+    });
+
+    dialogRef.afterClosed().subscribe( () => {
+      this.studenteService.getProfessore().subscribe(Response => {
+        setTimeout( () => {
+          this.dataSource = new MatTableDataSource<IProfessore>(Response);
+          this.studenteService.dataSourceProfessore = this.dataSource;
+        }, 100);
+      });
+    });
   }
 
   filter(changes: any) : void{
@@ -78,11 +115,6 @@ export class ProfessoreComponent implements OnInit, OnDestroy {
       this.dataSource.filter = changes.target.value;
       this.dataSource.filter.trim().toLowerCase();
     }
-  }
-
-  addCourse(element : any) {
-    this.studenteService.professoreCorrente = element as Professore;
-    this.router.navigate(['insegnamento-form']);
   }
 
 }

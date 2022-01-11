@@ -43,8 +43,8 @@ export class ProfessoreFormComponent implements OnInit, OnDestroy {
     const id = this.studenteService?.getIdProfessore();
     if(!id) {
       this.isNew = true;
-    } 
-    this.assignForm(this.studenteService.professoreCorrente);   
+    }
+    this.assignForm(this.studenteService.professoreCorrente);
   }
 
   ngOnDestroy(): void {
@@ -58,12 +58,12 @@ export class ProfessoreFormComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if(this.isNew) {
       this.addProfessore().subscribe(Response => console.log(Response));
-      this.checkoutForm.reset();
-      this.router.navigate([`/professore`]);
+      //this.checkoutForm.reset();
+      //this.router.navigate([`/professore`]);
     } else {
       this.modifica(this.checkoutForm.value).subscribe();
-      this.checkoutForm.reset();
-      setTimeout( () => this.router.navigate([`/professore`]), 0);
+      //this.checkoutForm.reset();
+      //setTimeout( () => this.router.navigate([`/professore`]), 0);
     }
   }
 
@@ -87,7 +87,7 @@ export class ProfessoreFormComponent implements OnInit, OnDestroy {
   }
 
   modifica(element:any) : Observable<Professore> {
-    
+
     const professore = {
       id: this.studenteService?.getIdProfessore(),
       name: element.name,
@@ -100,7 +100,7 @@ export class ProfessoreFormComponent implements OnInit, OnDestroy {
       address: element.address,
       houseNumber: element.houseNumber,
       createdAt: element.createdAt,
-      updateAt: this.updateAt 
+      updateAt: this.updateAt
     };
     return this.httpClient.put<Professore>('http://localhost:8092/esercitazionePlansoft/professor/update', professore, httpOptions);
   }

@@ -11,18 +11,21 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
-  declarations: [
-    CorsoFormComponent
-  ],
-  imports: [
-    CommonModule,
-    CorsoFormRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    HttpClientModule
-  ]
+    declarations: [
+        CorsoFormComponent
+    ],
+    exports: [
+        CorsoFormComponent
+    ],
+    imports: [
+        CommonModule,
+        CorsoFormRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        HttpClientModule
+    ]
 })
 export class CorsoFormModule { }

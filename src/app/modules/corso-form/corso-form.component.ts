@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, Input, EventEmitter, OnDestroy, OnInit, Output, OnChanges, SimpleChanges} from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -22,7 +22,7 @@ const httpOptions = {
   styleUrls: ['./corso-form.component.sass']
 })
 
-export class CorsoFormComponent implements OnInit, OnDestroy {
+export class CorsoFormComponent implements OnInit, OnDestroy, OnChanges {
 
   myDate = new Date();
   createdAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
@@ -30,6 +30,10 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
 
   public checkoutForm: FormGroup = {} as FormGroup;
   public isNew: boolean = false;
+  @Input() public idInput : number = 0;
+  @Output() public digitClick : EventEmitter<any> = new EventEmitter();
+  public id : number = 0;
+  public courseOutput : Corso = {} as Corso;
 
   professor = [{
     id: Number(),
@@ -58,40 +62,56 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
     this.studenteService.getProfessore().subscribe(Response => {
       this.professor = Response;
     });
-    const id = this.studenteService?.getIdCorso();
-    if(!id) {
+    // const id = this.studenteService?.getIdCorso();
+    if(!this.id) {
       this.isNew = true;
-    } 
+    }
     this.assignForm(this.studenteService.corsoCorrente);
   }
 
   ngOnDestroy(): void {
     this.studenteService.corsoCorrente = {} as Corso;
+    this.id = 0;
+    this.isNew = false;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.id = changes?.['idInput'].currentValue;
+    if (this.id != undefined) {
+      this.studenteService.getCorsoById(this.id).subscribe( Response => {
+        this.studenteService.corsoCorrente = Response;
+      });
+      this.assignForm(this.studenteService.corsoCorrente);
+    }
   }
 
   public hasError = (controlName: string, errorName: string) =>{
     return this.checkoutForm.controls[controlName].hasError(errorName);
   }
 
-  onSubmit(): void {
+  onSubmit(event : Event): void {
     if(this.isNew) {
       for (let i = 0; i < this.professor.length; i++) {
         if(this.professor[i].id == this.checkoutForm.value.professor) {
           this.checkoutForm.value.professor = this.professor[i];
         }
       }
-      this.addCorso().subscribe(Response => console.log(Response));
-      this.checkoutForm.reset();
-      this.router.navigate([`/corso`]);
+      this.addCorso().subscribe(Response => this.courseOutput = Response);
+      setTimeout( () => {
+        this.clickEvent(event);
+      }, 100);
+      // this.router.navigate([`/corso`]);
     } else {
       for (let i = 0; i < this.professor.length; i++) {
         if(this.professor[i].id == this.checkoutForm.value.professor) {
           this.checkoutForm.value.professor = this.professor[i];
         }
       }
-      this.modifica(this.checkoutForm.value).subscribe();
-      this.checkoutForm.reset();
-      setTimeout( () => this.router.navigate([`/corso`]), 0);
+      this.modifica(this.checkoutForm.value).subscribe(Response => this.courseOutput = Response);
+      setTimeout( () => {
+        this.clickEvent(event);
+      }, 100);
+      // this.checkoutForm.reset();
     }
   }
 
@@ -105,17 +125,17 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
   }
 
   modifica(element:any) : Observable<Corso> {
-    const idCorso = this.studenteService?.getIdCorso();
+    const idCorso = this.id;
 
     const corso = {
-      id: this.studenteService?.getIdCorso(),
+      id: this.id,
       name: element.name,
       description: element.description,
       professor: element.professor,
       startDate: element.startDate,
       endDate: element.endDate,
       createdAt: element.createdAt,
-      updateAt: this.updateAt 
+      updateAt: this.updateAt
     };
 
     if(this.checkDate(corso.startDate, corso.endDate)) {
@@ -143,6 +163,11 @@ export class CorsoFormComponent implements OnInit, OnDestroy {
       endDate: new FormControl(corso?.endDate, [Validators.required, DateValidator.dateVaidator]),
       createdAt: corso.createdAt ? corso.createdAt : this.createdAt
     });
+  }
+
+  public clickEvent(event : Event) : void {
+    // console.log(event);
+    this.digitClick.emit(this.courseOutput);
   }
 
 }

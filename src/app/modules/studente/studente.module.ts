@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-
+import { MatDialogModule } from "@angular/material/dialog";
 
 
 @NgModule({
@@ -26,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     MatToolbarModule,
     HttpClientModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ]
 })
 export class StudenteModule { }

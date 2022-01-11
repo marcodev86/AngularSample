@@ -8,6 +8,8 @@ import { StudenteServiceService} from 'src/app/services/studente-service.service
 import { formatDate} from '@angular/common';
 import { LOCALE_ID, Inject } from "@angular/core";
 import { MatTableDataSource } from '@angular/material/table';
+import {StudenteFormComponent} from "../studente-form/studente-form.component";
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-studente',
@@ -24,11 +26,12 @@ export class StudenteComponent implements OnInit, OnDestroy {
   dataSource : MatTableDataSource<IStudente> = new MatTableDataSource;
 
   constructor(
-      private router: Router, 
+      private router: Router,
       private httpClient: HttpClient,
       private formBuilder: FormBuilder,
       @Inject(LOCALE_ID) public locale: string,
-      private studenteService : StudenteServiceService
+      private studenteService : StudenteServiceService,
+      public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -71,7 +74,31 @@ export class StudenteComponent implements OnInit, OnDestroy {
 
   startModify(element : any) {
     this.studenteService.studenteCorrente = element as Studente;
-    this.router.navigate([`/studente-form`]);
+    // this.router.navigate([`/studente-form`]);
+    const dialogRef = this.dialog.open(StudenteFormComponent, {
+      height: '700px',
+      width: '1000px',
+    });
+
+    dialogRef.afterClosed().subscribe( () => {
+      this.studenteService.getStudente().subscribe(Response => {
+        this.dataSource = new MatTableDataSource<IStudente>(Response);
+        this.studenteService.dataSourceStudente = this.dataSource;
+      });
+    });
+  }
+
+  addStudent() {
+    const dialogRef = this.dialog.open(StudenteFormComponent);
+
+    dialogRef.afterClosed().subscribe( () => {
+      this.studenteService.getStudente().subscribe(Response => {
+        setTimeout( () => {
+          this.dataSource = new MatTableDataSource<IStudente>(Response);
+          this.studenteService.dataSourceStudente = this.dataSource;
+        }, 100);
+      });
+    });
   }
 
   courses(element : any) {

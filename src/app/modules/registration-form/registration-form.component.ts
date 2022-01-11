@@ -50,13 +50,13 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
         this.studentCourses.push(c.courseDto);
       }
     } );
-    
+
     this.studenteService.getCorso().subscribe( Response => {
       for(let c of Response) {
         for(let cs of this.studentCourses) {
           if (c.id === cs.id) {
             isThere = true;
-          }   
+          }
         }
         if(!isThere) {
           this.course.push(c);
@@ -76,13 +76,13 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.course.length; i++) {
       if(this.course[i].id === this.checkoutForm.value.courseRegistrationDto) {
         this.checkoutForm.value.courseRegistrationDto = [{
-          courseDto: this.course[i], 
+          courseDto: this.course[i],
           createdAt: this.createdAt
         }];
       }
     }
     this.addRegistration().subscribe(Response => console.log(Response));
-    this.checkoutForm.reset();
+    //this.checkoutForm.reset();
     this.router.navigate([`/studente`]);
   }
 
@@ -94,7 +94,7 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
     this.checkoutForm = this.formBuilder.group({
       studentDto : {},
       courseRegistrationDto: [{
-        courseDto: {}, 
+        courseDto: {},
         createdAt: ''
       }]
     });

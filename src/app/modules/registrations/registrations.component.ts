@@ -3,6 +3,8 @@ import { StudenteServiceService} from 'src/app/services/studente-service.service
 import { Corso, ICorso } from 'src/app/core/iCorso.interface';
 import { Studente } from 'src/app/core/iStudente.interface';
 import { MatTableDataSource } from '@angular/material/table';
+import {MatDialog} from '@angular/material/dialog';
+import {RegistrationFormComponent} from "../registration-form/registration-form.component";
 
 @Component({
   selector: 'app-registrations',
@@ -19,7 +21,8 @@ export class RegistrationsComponent implements OnInit {
   dataSource : MatTableDataSource<ICorso> = new MatTableDataSource;
 
   constructor(
-    private studenteService : StudenteServiceService
+    private studenteService : StudenteServiceService,
+    public dialog : MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +40,17 @@ export class RegistrationsComponent implements OnInit {
 
   assignForm() : void{
     this.dataSource = new MatTableDataSource<ICorso>(this.studentCourses);
+  }
+
+  addCourse() {
+    const dialogRef = this.dialog.open(RegistrationFormComponent, {
+      height: '250px',
+      width: '1000px',
+    });
+
+    dialogRef.afterClosed().subscribe( () => {
+
+    });
   }
 
 }

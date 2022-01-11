@@ -30,9 +30,12 @@ export class CorsoComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['id', 'nome', 'descrizione', 'docente', 'dataDiInizio', 'dataDiFine', 'modifica', 'rimuovi'];
   dataSource : MatTableDataSource<ICorso> = new MatTableDataSource;
+  public idCourse : any;
+  public isClicked : boolean = false;
+  public selectedRowIndex = -1;
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private httpClient: HttpClient,
     private formBuilder: FormBuilder,
     @Inject(LOCALE_ID) public locale: string,
@@ -50,7 +53,7 @@ export class CorsoComponent implements OnInit, OnDestroy {
         }
       }
       this.dataSource = new MatTableDataSource<ICorso>(Response);
-      console.log(this.dataSource);
+      console.log(this.idCourse);
       this.studenteService.dataSourceCorso = this.dataSource;
     });
   }
@@ -74,15 +77,49 @@ export class CorsoComponent implements OnInit, OnDestroy {
 
   startModify(element : any) {
     this.studenteService.corsoCorrente = element as Corso;
-    this.router.navigate([`/corso-form`]);
+    this.idCourse = this.studenteService?.getIdCorso()
+    this.isClicked = true;
+    // this.router.navigate([`/corso-form`]);
   }
-
 
   filter(changes: any) : void{
     if(changes) {
       console.log(JSON.stringify(changes.target.value));
       this.dataSource.filter = changes.target.value;
       this.dataSource.filter.trim().toLowerCase();
+    }
+  }
+
+  addCourse() {
+    this.isClicked = true;
+    this.idCourse = undefined;
+  }
+
+  public digitClickEvent(event : Corso) : void {
+    // console.log(event);
+    this.changeClick(event);
+  }
+
+  public changeClick(corso : Corso) {
+    if (corso != undefined) {
+      this.isClicked = false;
+    }
+    if (corso.id != undefined) {
+      this.idCourse = undefined;
+      const data = this.dataSource.data;
+      const index = data.findIndex( x => x.id === corso.id);
+      if (index != -1) {
+        data.splice(index, 1);
+        data.push(corso);
+        this.dataSource.data = data;
+        this.dataSource._updateChangeSubscription();
+      } else {
+        data.push(corso);
+        this.dataSource.data = data;
+        this.dataSource._updateChangeSubscription();
+      }
+      this.selectedRowIndex = corso.id;
+      setTimeout( () => this.selectedRowIndex = -1, 5000);
     }
   }
 
