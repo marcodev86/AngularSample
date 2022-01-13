@@ -9,14 +9,6 @@ import { LOCALE_ID, Inject } from "@angular/core";
 import { Corso, ICorso } from 'src/app/core/iCorso.interface';
 import { MatTableDataSource } from '@angular/material/table';
 
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  })
-};
-
 @Component({
   selector: 'app-corso',
   templateUrl: './corso.component.html',
@@ -79,7 +71,6 @@ export class CorsoComponent implements OnInit, OnDestroy {
     this.studenteService.corsoCorrente = element as Corso;
     this.idCourse = this.studenteService?.getIdCorso()
     this.isClicked = true;
-    // this.router.navigate([`/corso-form`]);
   }
 
   filter(changes: any) : void{
@@ -96,7 +87,6 @@ export class CorsoComponent implements OnInit, OnDestroy {
   }
 
   public digitClickEvent(event : Corso) : void {
-    // console.log(event);
     this.changeClick(event);
   }
 

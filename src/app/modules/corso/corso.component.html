@@ -4,9 +4,6 @@
     <mat-icon>search</mat-icon>
 <div class="container">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition"
-      -->
 
       <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> Id </th>
@@ -41,7 +38,7 @@
       <ng-container matColumnDef="modifica">
           <th mat-header-cell *matHeaderCellDef> Modifica </th>
           <td mat-cell *matCellDef="let element">
-              <button mat-icon-button color="" (click)="startModify(element)">
+              <button mat-icon-button color="" (click)="startModify(element)" [ngClass]="{'noClick': isClicked == true}">
                   <mat-icon>create</mat-icon>
               </button>
           </td>
@@ -50,7 +47,7 @@
       <ng-container matColumnDef="rimuovi">
           <th mat-header-cell *matHeaderCellDef> Rimuovi </th>
           <td mat-cell *matCellDef="let element">
-              <button mat-icon-button color="warn" (click)="deleteCorso(element.id)">
+              <button mat-icon-button color="warn" (click)="deleteCorso(element.id)" [ngClass]="{'noClick': isClicked == true}">
                   <mat-icon>delete</mat-icon>
               </button>
           </td>
@@ -61,7 +58,7 @@
   </table>
   <app-corso-form [idInput]="idCourse" (digitClick)="digitClickEvent($event)" *ngIf="isClicked==true"></app-corso-form>
 </div>
- <button mat-fab id="add" color="primary" (click)="addCourse()">
+ <button mat-fab id="add" color="primary" (click)="addCourse()" [ngClass]="{'noClick': isClicked == true}">
    <mat-icon>add_circle</mat-icon>
  </button>
 

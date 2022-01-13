@@ -62,7 +62,6 @@ export class CorsoFormComponent implements OnInit, OnDestroy, OnChanges {
     this.studenteService.getProfessore().subscribe(Response => {
       this.professor = Response;
     });
-    // const id = this.studenteService?.getIdCorso();
     if(!this.id) {
       this.isNew = true;
     }
@@ -99,8 +98,7 @@ export class CorsoFormComponent implements OnInit, OnDestroy, OnChanges {
       this.addCorso().subscribe(Response => this.courseOutput = Response);
       setTimeout( () => {
         this.clickEvent(event);
-      }, 100);
-      // this.router.navigate([`/corso`]);
+      }, 200);
     } else {
       for (let i = 0; i < this.professor.length; i++) {
         if(this.professor[i].id == this.checkoutForm.value.professor) {
@@ -110,8 +108,7 @@ export class CorsoFormComponent implements OnInit, OnDestroy, OnChanges {
       this.modifica(this.checkoutForm.value).subscribe(Response => this.courseOutput = Response);
       setTimeout( () => {
         this.clickEvent(event);
-      }, 100);
-      // this.checkoutForm.reset();
+      }, 200);
     }
   }
 
@@ -166,7 +163,6 @@ export class CorsoFormComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public clickEvent(event : Event) : void {
-    // console.log(event);
     this.digitClick.emit(this.courseOutput);
   }
 

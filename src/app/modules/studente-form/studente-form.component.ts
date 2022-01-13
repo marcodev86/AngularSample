@@ -58,12 +58,8 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if(this.isNew) {
       this.addStudente().subscribe(Response => console.log(Response));
-      //this.checkoutForm.reset();
-      //this.router.navigate([`/studente`]);
     } else {
       this.modifica(this.checkoutForm.value).subscribe();
-      //this.checkoutForm.reset();
-      //setTimeout( () => this.router.navigate([`/studente`]), 100);
     }
   }
 
@@ -84,7 +80,6 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
       houseNumber: new FormControl(student?.houseNumber, [Validators.required, Validators.maxLength(10)]),
       createdAt: student.createdAt ? student.createdAt : this.createdAt
     });
-    console.log(this.checkoutForm);
   }
 
   modifica(element:any) : Observable<Studente> {

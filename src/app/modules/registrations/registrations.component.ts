@@ -46,6 +46,7 @@ export class RegistrationsComponent implements OnInit {
     const dialogRef = this.dialog.open(RegistrationFormComponent, {
       height: '250px',
       width: '1000px',
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe( () => {

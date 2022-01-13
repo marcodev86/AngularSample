@@ -12,13 +12,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {ProfessoreFormComponent} from "../professore-form/professore-form.component";
 import {InsegnamentoFormComponent} from "../insegnamento-form/insegnamento-form.component";
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  })
-};
-
 @Component({
   selector: 'app-professore',
   templateUrl: './professore.component.html',
@@ -32,6 +25,8 @@ export class ProfessoreComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['id', 'nome', 'cognome', 'data', 'comune', 'codiceFiscale', 'telefono', 'cap', 'indirizzo', 'civico', 'corso', 'modifica', 'rimuovi'];
   dataSource : MatTableDataSource<IProfessore> = new MatTableDataSource;
+
+  public selectedRowIndex = -1;
 
   constructor(
     private router: Router,
@@ -67,17 +62,36 @@ export class ProfessoreComponent implements OnInit, OnDestroy {
   }
 
   startModify(element : any) {
+    let found = false;
     this.studenteService.professoreCorrente = element as Professore;
-    //this.router.navigate([`/professore-form`]);
+
     const dialogRef = this.dialog.open(ProfessoreFormComponent, {
       height: '700px',
       width: '1000px',
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe( () => {
       this.studenteService.getProfessore().subscribe(Response => {
-        this.dataSource = new MatTableDataSource<IProfessore>(Response);
-        this.studenteService.dataSourceProfessore = this.dataSource;
+        setTimeout( () => {
+          const temp = this.dataSource;
+          this.dataSource = new MatTableDataSource<IProfessore>(Response);
+          this.studenteService.dataSourceProfessore = this.dataSource;
+          for (let i of this.dataSource.data) {
+            for (let j of temp.data) {
+              if (this.areEquals(i, j)) {
+                found = true;
+                break;
+              } else {
+                found = false;
+              }
+            }
+            if (!found) {
+              this.selectedRowIndex = i.id;
+            }
+          }
+        }, 300);
+        setTimeout( () => this.selectedRowIndex = -1, 5000);
       });
     });
   }
@@ -89,22 +103,41 @@ export class ProfessoreComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(InsegnamentoFormComponent, {
       height: '250px',
       width: '1000px',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe();
   }
 
   addProfessor() {
+    let found = false;
+
     const dialogRef = this.dialog.open(ProfessoreFormComponent, {
       height: '700px',
       width: '1000px',
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe( () => {
       this.studenteService.getProfessore().subscribe(Response => {
         setTimeout( () => {
+          const temp = this.dataSource;
           this.dataSource = new MatTableDataSource<IProfessore>(Response);
           this.studenteService.dataSourceProfessore = this.dataSource;
-        }, 100);
+          for (let i of this.dataSource.data) {
+            for (let j of temp.data) {
+              if (i.id == j.id) {
+                found = true;
+                break;
+              } else {
+                found = false;
+              }
+            }
+            if (!found) {
+              this.selectedRowIndex = i.id;
+            }
+          }
+        }, 300);
+        setTimeout( () => this.selectedRowIndex = -1, 5000);
       });
     });
   }
@@ -114,6 +147,24 @@ export class ProfessoreComponent implements OnInit, OnDestroy {
       console.log(JSON.stringify(changes.target.value));
       this.dataSource.filter = changes.target.value;
       this.dataSource.filter.trim().toLowerCase();
+    }
+  }
+
+  areEquals(obj1:Professore, obj2:Professore) : boolean {
+    if (obj1.id === obj2.id &&
+      obj1.name === obj2.name &&
+      obj1.surname === obj2.surname &&
+      obj1.birthdayDate === obj2.birthdayDate &&
+      obj1.city === obj2.city &&
+      obj1.fiscalCode === obj2.fiscalCode &&
+      obj1.number === obj2.number &&
+      obj1.cap === obj2.cap &&
+      obj1.address === obj2.address &&
+      obj1.houseNumber === obj2.houseNumber
+    ) {
+      return true;
+    } else {
+      return false;
     }
   }
 

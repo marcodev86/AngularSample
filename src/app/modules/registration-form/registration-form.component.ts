@@ -82,7 +82,6 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
       }
     }
     this.addRegistration().subscribe(Response => console.log(Response));
-    //this.checkoutForm.reset();
     this.router.navigate([`/studente`]);
   }
 
