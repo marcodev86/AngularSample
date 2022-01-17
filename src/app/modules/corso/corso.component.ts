@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -8,6 +8,8 @@ import { formatDate } from '@angular/common';
 import { LOCALE_ID, Inject } from '@angular/core';
 import { Corso, ICorso } from 'src/app/core/iCorso.interface';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-corso',
@@ -41,6 +43,9 @@ export class CorsoComponent implements OnInit, OnDestroy {
     private studenteService: StudenteServiceService
   ) {}
 
+  @ViewChild(MatSort) sort: any;
+  @ViewChild(MatPaginator) paginator: any;
+
   ngOnInit(): void {
     this.getCourseSubscription$ = this.studenteService
       .getCorso()
@@ -54,8 +59,9 @@ export class CorsoComponent implements OnInit, OnDestroy {
           }
         }
         this.dataSource = new MatTableDataSource<ICorso>(Response);
-        console.log(this.idCourse);
         this.studenteService.dataSourceCorso = this.dataSource;
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       });
   }
 

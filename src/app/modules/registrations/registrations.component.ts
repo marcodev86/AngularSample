@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { StudenteServiceService } from 'src/app/services/studente-service.service';
 import { Corso, ICorso } from 'src/app/core/iCorso.interface';
 import { Studente } from 'src/app/core/iStudente.interface';
@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { RegistrationFormComponent } from '../registration-form/registration-form.component';
 import { Observable, Subscription } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-registrations',
@@ -39,6 +41,9 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
     public dialog: MatDialog
   ) {}
 
+  @ViewChild(MatSort) sort: any;
+  @ViewChild(MatPaginator) paginator: any;
+
   ngOnInit(): void {
     const id = this.studenteService?.getIdStudente();
     this.student = this.studenteService.studenteCorrente;
@@ -61,6 +66,8 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
 
   assignForm(): void {
     this.dataSource = new MatTableDataSource<ICorso>(this.studentCourses);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   addCourse() {

@@ -14,6 +14,7 @@ import { StudenteServiceService } from 'src/app/services/studente-service.servic
 import { HttpClientModule } from '@angular/common/http';
 import { InsegnamentoFormComponent } from './modules/insegnamento-form/insegnamento-form.component';
 import { DayjsPipe } from './dayjs.pipe';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { DayjsPipe } from './dayjs.pipe';
     MatButtonModule,
     HttpClientModule,
     MatSelectModule,
+    MatPaginatorModule,
   ],
   providers: [StudenteServiceService],
   bootstrap: [AppComponent],

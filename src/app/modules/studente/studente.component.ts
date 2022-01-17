@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -9,9 +15,11 @@ import { LOCALE_ID, Inject } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { StudenteFormComponent } from '../studente-form/studente-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import * as dayjs from 'dayjs';
 import * as dayjsit from 'dayjs/locale/it';
 import * as localizedFormat from 'dayjs/plugin/localizedFormat';
+import { MatSort } from '@angular/material/sort';
 dayjs.extend(localizedFormat);
 
 @Component({
@@ -57,12 +65,17 @@ export class StudenteComponent implements OnInit, OnDestroy {
     dayjs.locale(dayjsit);
   }
 
+  @ViewChild(MatSort) sort: any;
+  @ViewChild(MatPaginator) paginator: any;
+
   ngOnInit(): void {
     this.getStudentSubscription$ = this.studenteService
       .getStudente()
       .subscribe((Response) => {
         this.dataSource = new MatTableDataSource<IStudente>(Response);
         this.studenteService.dataSourceStudente = this.dataSource;
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       });
   }
 

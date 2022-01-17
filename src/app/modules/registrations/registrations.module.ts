@@ -8,13 +8,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogModule } from "@angular/material/dialog";
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
-  declarations: [
-    RegistrationsComponent
-  ],
+  declarations: [RegistrationsComponent],
   imports: [
     CommonModule,
     RegistrationsRoutingModule,
@@ -25,7 +24,9 @@ import { MatDialogModule } from "@angular/material/dialog";
     MatInputModule,
     MatIconModule,
     HttpClientModule,
-    MatDialogModule
-  ]
+    MatDialogModule,
+    MatPaginatorModule,
+    MatSortModule,
+  ],
 })
-export class RegistrationsModule { }
+export class RegistrationsModule {}

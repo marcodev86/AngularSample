@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +10,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfessoreFormComponent } from '../professore-form/professore-form.component';
 import { InsegnamentoFormComponent } from '../insegnamento-form/insegnamento-form.component';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-professore',
@@ -48,12 +50,17 @@ export class ProfessoreComponent implements OnInit, OnDestroy {
     public dialog: MatDialog
   ) {}
 
+  @ViewChild(MatSort) sort: any;
+  @ViewChild(MatPaginator) paginator: any;
+
   ngOnInit(): void {
     this.getProfessorSubscription$ = this.studenteService
       .getProfessore()
       .subscribe((Response) => {
         this.dataSource = new MatTableDataSource<IProfessore>(Response);
         this.studenteService.dataSourceProfessore = this.dataSource;
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       });
   }
 
