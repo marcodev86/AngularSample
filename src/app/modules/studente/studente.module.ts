@@ -9,13 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogModule } from "@angular/material/dialog";
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [
-    StudenteComponent
-  ],
+  declarations: [StudenteComponent],
   imports: [
     CommonModule,
     StudenteRoutingModule,
@@ -27,7 +24,7 @@ import { MatDialogModule } from "@angular/material/dialog";
     MatToolbarModule,
     HttpClientModule,
     MatIconModule,
-    MatDialogModule
-  ]
+    MatDialogModule,
+  ],
 })
-export class StudenteModule { }
+export class StudenteModule {}

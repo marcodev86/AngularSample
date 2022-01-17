@@ -1,68 +1,85 @@
-import {Component, Input, EventEmitter, OnDestroy, OnInit, Output, OnChanges, SimpleChanges} from '@angular/core';
-import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  Input,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  FormControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { formatDate} from '@angular/common';
-import { LOCALE_ID, Inject } from "@angular/core";
+import { Observable, Subscription } from 'rxjs';
+import { formatDate } from '@angular/common';
+import { LOCALE_ID, Inject } from '@angular/core';
 import { Corso } from 'src/app/core/iCorso.interface';
-import { StudenteServiceService} from 'src/app/services/studente-service.service';
+import { StudenteServiceService } from 'src/app/services/studente-service.service';
 import { DateValidator } from 'src/app/shared/date.validator';
 import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  })
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  }),
 };
 
 @Component({
   selector: 'app-corso-form',
   templateUrl: './corso-form.component.html',
-  styleUrls: ['./corso-form.component.sass']
+  styleUrls: ['./corso-form.component.sass'],
 })
-
 export class CorsoFormComponent implements OnInit, OnDestroy, OnChanges {
-
-  myDate = new Date();
-  createdAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
-  updateAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
-
   public checkoutForm: FormGroup = {} as FormGroup;
   public isNew: boolean = false;
-  @Input() public idInput : number = 0;
-  @Output() public digitClick : EventEmitter<any> = new EventEmitter();
-  public id : number = 0;
-  public courseOutput : Corso = {} as Corso;
+  @Input() public idInput: number = 0;
+  @Output() public digitClick: EventEmitter<any> = new EventEmitter();
+  public id: number = 0;
+  public courseOutput: Corso = {} as Corso;
 
-  professor = [{
-    id: Number(),
-    name: '',
-    surname: '',
-    birthdayDate: '',
-    number: '',
-    fiscalCode: '',
-    cap: '',
-    city: '',
-    address: '',
-    houseNumber: '',
-    createdAt: '',
-    updateAt: ''
-  }];
+  private getProfessoreSunscription$: Subscription | undefined;
+  private addCourseSubscription$: Subscription | undefined;
+  private modifyCourseSubscription$: Subscription | undefined;
+  private getCourseByIdSubscription$: Subscription | undefined;
+
+  professor = [
+    {
+      id: Number(),
+      name: '',
+      surname: '',
+      birthdayDate: '',
+      number: '',
+      fiscalCode: '',
+      cap: '',
+      city: '',
+      address: '',
+      houseNumber: '',
+      createdAt: '',
+      updateAt: '',
+    },
+  ];
 
   constructor(
     private router: Router,
     private httpClient: HttpClient,
     private formBuilder: FormBuilder,
     @Inject(LOCALE_ID) public locale: string,
-    private studenteService : StudenteServiceService
-  ) { }
+    private studenteService: StudenteServiceService
+  ) {}
 
   ngOnInit(): void {
-    this.studenteService.getProfessore().subscribe(Response => {
-      this.professor = Response;
-    });
-    if(!this.id) {
+    this.getProfessoreSunscription$ = this.studenteService
+      .getProfessore()
+      .subscribe((Response) => {
+        this.professor = Response;
+      });
+    if (!this.id) {
       this.isNew = true;
     }
     this.assignForm(this.studenteService.corsoCorrente);
@@ -72,57 +89,77 @@ export class CorsoFormComponent implements OnInit, OnDestroy, OnChanges {
     this.studenteService.corsoCorrente = {} as Corso;
     this.id = 0;
     this.isNew = false;
+    this.addCourseSubscription$?.unsubscribe();
+    this.getCourseByIdSubscription$?.unsubscribe();
+    this.getCourseByIdSubscription$?.unsubscribe();
+    this.getProfessoreSunscription$?.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     this.id = changes?.['idInput'].currentValue;
     if (this.id != undefined) {
-      this.studenteService.getCorsoById(this.id).subscribe( Response => {
-        this.studenteService.corsoCorrente = Response;
-      });
+      this.getCourseByIdSubscription$ = this.studenteService
+        .getCorsoById(this.id)
+        .subscribe((Response) => {
+          this.studenteService.corsoCorrente = Response;
+        });
       this.assignForm(this.studenteService.corsoCorrente);
     }
   }
 
-  public hasError = (controlName: string, errorName: string) =>{
+  public hasError = (controlName: string, errorName: string) => {
     return this.checkoutForm.controls[controlName].hasError(errorName);
-  }
+  };
 
-  onSubmit(event : Event): void {
-    if(this.isNew) {
+  onSubmit(event: Event): void {
+    if (this.isNew) {
       for (let i = 0; i < this.professor.length; i++) {
-        if(this.professor[i].id == this.checkoutForm.value.professor) {
+        if (this.professor[i].id == this.checkoutForm.value.professor) {
           this.checkoutForm.value.professor = this.professor[i];
         }
       }
-      this.addCorso().subscribe(Response => this.courseOutput = Response);
-      setTimeout( () => {
+      this.addCourseSubscription$ = this.addCorso().subscribe(
+        (Response) => (this.courseOutput = Response)
+      );
+      setTimeout(() => {
         this.clickEvent(event);
       }, 200);
     } else {
       for (let i = 0; i < this.professor.length; i++) {
-        if(this.professor[i].id == this.checkoutForm.value.professor) {
+        if (this.professor[i].id == this.checkoutForm.value.professor) {
           this.checkoutForm.value.professor = this.professor[i];
         }
       }
-      this.modifica(this.checkoutForm.value).subscribe(Response => this.courseOutput = Response);
-      setTimeout( () => {
+      this.modifyCourseSubscription$ = this.modifica(
+        this.checkoutForm.value
+      ).subscribe((Response) => (this.courseOutput = Response));
+      setTimeout(() => {
         this.clickEvent(event);
       }, 200);
     }
   }
 
-  addCorso() : Observable<any> {
-    if(this.checkDate(this.checkoutForm.value.startDate, this.checkoutForm.value.endDate)) {
+  addCorso(): Observable<any> {
+    if (
+      this.checkDate(
+        this.checkoutForm.value.startDate,
+        this.checkoutForm.value.endDate
+      )
+    ) {
       let temp = this.checkoutForm.value.startDate;
       this.checkoutForm.value.startDate = this.checkoutForm.value.endDate;
       this.checkoutForm.value.endDate = temp;
     }
-    return this.httpClient.post<Corso>('http://localhost:8092/esercitazionePlansoft/course/save', this.checkoutForm.value, httpOptions);
+    return this.httpClient.post<Corso>(
+      'http://localhost:8092/esercitazionePlansoft/course/save',
+      this.checkoutForm.value,
+      httpOptions
+    );
   }
 
-  modifica(element:any) : Observable<Corso> {
+  modifica(element: any): Observable<Corso> {
     const idCorso = this.id;
+    const updateAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
 
     const corso = {
       id: this.id,
@@ -132,38 +169,54 @@ export class CorsoFormComponent implements OnInit, OnDestroy, OnChanges {
       startDate: element.startDate,
       endDate: element.endDate,
       createdAt: element.createdAt,
-      updateAt: this.updateAt
+      updateAt: updateAt,
     };
 
-    if(this.checkDate(corso.startDate, corso.endDate)) {
+    if (this.checkDate(corso.startDate, corso.endDate)) {
       let temp = corso.startDate;
       corso.startDate = corso.endDate;
       corso.endDate = temp;
     }
 
-    return this.httpClient.put<Corso>(`http://localhost:8092/esercitazionePlansoft/course/updateCourseById/${idCorso}`, corso, httpOptions);
+    return this.httpClient.put<Corso>(
+      `http://localhost:8092/esercitazionePlansoft/course/updateCourseById/${idCorso}`,
+      corso,
+      httpOptions
+    );
   }
 
-  checkDate(date1 : string, date2 : string) {
+  checkDate(date1: string, date2: string) {
     let newDate1 = new Date(date1);
     let newDate2 = new Date(date2);
 
     return newDate1 > newDate2;
   }
 
-  assignForm(corso : any) {
+  assignForm(corso: any) {
+    const createdAt = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
     this.checkoutForm = this.formBuilder.group({
-      name: new FormControl(corso?.name, [Validators.required, Validators.maxLength(100)]),
-      description: new FormControl(corso?.description, [Validators.required, Validators.maxLength(200)]),
+      name: new FormControl(corso?.name, [
+        Validators.required,
+        Validators.maxLength(100),
+      ]),
+      description: new FormControl(corso?.description, [
+        Validators.required,
+        Validators.maxLength(200),
+      ]),
       professor: corso?.professor,
-      startDate: new FormControl(corso?.startDate, [Validators.required, DateValidator.dateVaidator]),
-      endDate: new FormControl(corso?.endDate, [Validators.required, DateValidator.dateVaidator]),
-      createdAt: corso.createdAt ? corso.createdAt : this.createdAt
+      startDate: new FormControl(corso?.startDate, [
+        Validators.required,
+        DateValidator.dateVaidator,
+      ]),
+      endDate: new FormControl(corso?.endDate, [
+        Validators.required,
+        DateValidator.dateVaidator,
+      ]),
+      createdAt: corso.createdAt ? corso.createdAt : createdAt,
     });
   }
 
-  public clickEvent(event : Event) : void {
+  public clickEvent(event: Event): void {
     this.digitClick.emit(this.courseOutput);
   }
-
 }

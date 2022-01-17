@@ -7,13 +7,13 @@ import { NavbarComponent } from './component/navbar/navbar.component';
 import { View1Component } from './view/view1/view1.component';
 import { ContentView2Component } from './view/view2/content-view2/content-view2.component';
 import { View2Component } from './view/view2/view2.component';
-import { MatToolbarModule} from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { StudenteServiceService} from 'src/app/services/studente-service.service';
+import { StudenteServiceService } from 'src/app/services/studente-service.service';
 import { HttpClientModule } from '@angular/common/http';
-import {InsegnamentoFormComponent} from "./modules/insegnamento-form/insegnamento-form.component";
-
+import { InsegnamentoFormComponent } from './modules/insegnamento-form/insegnamento-form.component';
+import { DayjsPipe } from './dayjs.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import {InsegnamentoFormComponent} from "./modules/insegnamento-form/insegnament
     View1Component,
     View2Component,
     ContentView2Component,
-    NavbarComponent
+    NavbarComponent,
+    DayjsPipe,
   ],
   imports: [
     BrowserModule,
@@ -30,10 +31,11 @@ import {InsegnamentoFormComponent} from "./modules/insegnamento-form/insegnament
     MatToolbarModule,
     MatButtonModule,
     HttpClientModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   providers: [StudenteServiceService],
   bootstrap: [AppComponent],
-  entryComponents:[InsegnamentoFormComponent]
+  entryComponents: [InsegnamentoFormComponent],
+  exports: [DayjsPipe],
 })
-export class AppModule { }
+export class AppModule {}
