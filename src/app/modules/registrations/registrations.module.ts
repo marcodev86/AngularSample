@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [RegistrationsComponent],
@@ -27,6 +28,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatDialogModule,
     MatPaginatorModule,
     MatSortModule,
+    SharedModule,
   ],
 })
 export class RegistrationsModule {}

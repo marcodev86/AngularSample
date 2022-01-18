@@ -60,6 +60,7 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.studenteService.studenteCorrente = {} as Studente;
     this.getRegistrationsSubscription$?.unsubscribe();
     this.deleteRegistrationsSubscription$?.unsubscribe();
   }

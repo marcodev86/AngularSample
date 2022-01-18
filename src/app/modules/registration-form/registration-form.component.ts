@@ -74,7 +74,6 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.studenteService.studenteCorrente = {} as Studente;
     this.getCourseSubscription$?.unsubscribe();
     this.getRegistrationsSubscription$?.unsubscribe();
     this.addRegistrationsSubscription$?.unsubscribe();

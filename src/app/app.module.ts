@@ -13,7 +13,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { StudenteServiceService } from 'src/app/services/studente-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { InsegnamentoFormComponent } from './modules/insegnamento-form/insegnamento-form.component';
-import { DayjsPipe } from './dayjs.pipe';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     View2Component,
     ContentView2Component,
     NavbarComponent,
-    DayjsPipe,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +36,5 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   providers: [StudenteServiceService],
   bootstrap: [AppComponent],
   entryComponents: [InsegnamentoFormComponent],
-  exports: [DayjsPipe],
 })
 export class AppModule {}

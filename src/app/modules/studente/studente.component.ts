@@ -16,11 +16,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { StudenteFormComponent } from '../studente-form/studente-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import * as dayjs from 'dayjs';
-import * as dayjsit from 'dayjs/locale/it';
-import * as localizedFormat from 'dayjs/plugin/localizedFormat';
 import { MatSort } from '@angular/material/sort';
-dayjs.extend(localizedFormat);
 
 @Component({
   selector: 'app-studente',
@@ -49,6 +45,7 @@ export class StudenteComponent implements OnInit, OnDestroy {
 
   private getStudentSubscription$: Subscription | undefined;
   private deleteStudentSubscription$: Subscription | undefined;
+  // private subscription$: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -57,13 +54,7 @@ export class StudenteComponent implements OnInit, OnDestroy {
     @Inject(LOCALE_ID) public locale: string,
     private studenteService: StudenteServiceService,
     public dialog: MatDialog
-  ) {
-    this.initDayJs();
-  }
-
-  private initDayJs() {
-    dayjs.locale(dayjsit);
-  }
+  ) {}
 
   @ViewChild(MatSort) sort: any;
   @ViewChild(MatPaginator) paginator: any;
@@ -77,12 +68,14 @@ export class StudenteComponent implements OnInit, OnDestroy {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });
+    //this.subscription$ = this.getStudentSubscription$;
   }
 
   ngOnDestroy(): void {
     this.studenteService.dataSourceStudente = new MatTableDataSource();
     this.getStudentSubscription$?.unsubscribe();
     this.deleteStudentSubscription$?.unsubscribe();
+    //this.subscription$?.unsubscribe();
   }
 
   filter(changes: any): void {
@@ -106,6 +99,7 @@ export class StudenteComponent implements OnInit, OnDestroy {
       data.splice(index, 1);
       this.dataSource._updateChangeSubscription();
     });
+    // this.subscription$?.add(this.deleteStudentSubscription$);
   }
 
   startModify(element: any) {

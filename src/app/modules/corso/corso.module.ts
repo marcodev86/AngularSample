@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CorsoFormModule } from '../corso-form/corso-form.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [CorsoComponent],
@@ -27,6 +28,7 @@ import { MatSortModule } from '@angular/material/sort';
     CorsoFormModule,
     MatPaginatorModule,
     MatSortModule,
+    SharedModule,
   ],
 })
 export class CorsoModule {}
