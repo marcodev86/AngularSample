@@ -1,0 +1,47 @@
+{
+  "USER": {
+    "NAME": "Nome",
+    "SURNAME": "Cognome",
+    "DATE": "Data",
+    "CITY": "Comune",
+    "FISCALCODE": "Codice fiscale",
+    "NUMBER": "Telefono",
+    "ADDRESS": "Indirizzo",
+    "HOUSENUMBER": "Numero civico",
+    "COURSES": "Corsi seguiti",
+    "TEACH": "Insegna"
+  },
+  "COURSE": {
+    "NAME": "Nome",
+    "DESCRIPTION": "Descrizione",
+    "PROFESSOR": "Docente",
+    "BEGIN": "Data di inizio corso",
+    "END": "Data di fine corso"
+  },
+  "OPTIONS": {
+    "MODIFY": "Modifica",
+    "DELETE": "Rimuovi",
+    "FILTER": "Filtra"
+  },
+  "NAVBAR": {
+    "STUDENTS": "Studenti",
+    "PROFESSORS": "Professori",
+    "COURSES": "Corsi"
+  },
+  "FORM": {
+    "STUDENT-ADD": "Aggiungi un nuovo studente",
+    "STUDENT-MODIFY": "Modifica lo studente",
+    "PROFESSOR-ADD": "Aggiungi un nuovo docente",
+    "PROFESSOR-MODIFY": "Modifica il docente",
+    "COURSE-ADD": "Aggiungi un nuovo corso",
+    "COURSE-MODIFY": "Modifica il corso"
+  },
+  "REGISTRATIONS": {
+    "HOME": "Corsi seguiti da",
+    "STUDENT": "Studente",
+    "PROFESSOR": "Professore",
+    "SAVE": "Salva",
+    "BACK": "Indietro",
+    "LEAVE": "Abbandona"
+  }
+}

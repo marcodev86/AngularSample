@@ -8,13 +8,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogModule } from "@angular/material/dialog";
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-  declarations: [
-    RegistrationFormComponent
-  ],
+  declarations: [RegistrationFormComponent],
   imports: [
     CommonModule,
     RegistrationFormRoutingModule,
@@ -24,7 +22,8 @@ import { MatDialogModule } from "@angular/material/dialog";
     MatButtonModule,
     MatSelectModule,
     HttpClientModule,
-    MatDialogModule
-  ]
+    MatDialogModule,
+    SharedModule,
+  ],
 })
-export class RegistrationFormModule { }
+export class RegistrationFormModule {}

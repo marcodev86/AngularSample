@@ -1,7 +1,7 @@
 <mat-dialog-content class="mat-typography">
   <form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
       <h2>
-          Studente: {{student.name}} {{student.surname}}
+        {{'REGISTRATIONS.STUDENT' | translate}}: {{student.name}} {{student.surname}}
       </h2>
       <p>
           <mat-form-field appearance="fill">
@@ -15,8 +15,8 @@
       </p>
 
       <mat-dialog-actions align="center">
-        <button mat-raised-button mat-dialog-close>Indietro</button>
-        <button mat-raised-button color="primary" class="form" type="submit">Salva registrazione</button>
+        <button mat-raised-button mat-dialog-close>{{'REGISTRATIONS.BACK' | translate}}</button>
+        <button mat-raised-button color="primary" class="form" type="submit">{{'REGISTRATIONS.SAVE' | translate}}</button>
       </mat-dialog-actions>
   </form>
 </mat-dialog-content>

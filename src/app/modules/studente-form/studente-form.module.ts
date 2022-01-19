@@ -6,16 +6,14 @@ import { StudenteFormComponent } from './studente-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import{ MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogModule } from "@angular/material/dialog";
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-  declarations: [
-    StudenteFormComponent
-  ],
+  declarations: [StudenteFormComponent],
   imports: [
     CommonModule,
     StudenteFormRoutingModule,
@@ -26,7 +24,8 @@ import { MatDialogModule } from "@angular/material/dialog";
     MatDatepickerModule,
     MatNativeDateModule,
     HttpClientModule,
-    MatDialogModule
-  ]
+    MatDialogModule,
+    SharedModule,
+  ],
 })
-export class StudenteFormModule { }
+export class StudenteFormModule {}

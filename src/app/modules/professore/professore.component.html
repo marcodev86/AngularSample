@@ -1,44 +1,44 @@
 <div>
     <mat-form-field>
-        <input matInput placeholder="Filter" (keyup)="filter($event)">
+        <input matInput placeholder="{{'OPTIONS.FILTER' | translate}}" (keyup)="filter($event)">
     </mat-form-field>
     <mat-icon>search</mat-icon>
 </div>
 <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource">
+  <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <th mat-header-cell mat-sort-header *matHeaderCellDef> Id </th>
           <td mat-cell *matCellDef="let element"> {{element.id}} </td>
       </ng-container>
 
       <ng-container matColumnDef="nome">
-          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <th mat-header-cell *matHeaderCellDef> {{'USER.NAME' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="cognome">
-          <th mat-header-cell *matHeaderCellDef> Cognome </th>
+          <th mat-header-cell *matHeaderCellDef> {{'USER.SURNAME' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
       </ng-container>
 
       <ng-container matColumnDef="data">
-          <th mat-header-cell *matHeaderCellDef> Data </th>
+          <th mat-header-cell *matHeaderCellDef> {{'USER.DATE' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{(element.birthdayDate | dayjsPipe : 'LL' : 'it') | async}} </td>
       </ng-container>
 
       <ng-container matColumnDef="comune">
-          <th mat-header-cell *matHeaderCellDef> Comune </th>
+          <th mat-header-cell *matHeaderCellDef> {{'USER.CITY' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{element.city}} </td>
       </ng-container>
 
       <ng-container matColumnDef="codiceFiscale">
-          <th mat-header-cell *matHeaderCellDef> Codice Fiscale </th>
+          <th mat-header-cell *matHeaderCellDef> {{'USER.FISCALCODE' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{element.fiscalCode}} </td>
       </ng-container>
 
       <ng-container matColumnDef="telefono">
-          <th mat-header-cell *matHeaderCellDef> Telefono </th>
+          <th mat-header-cell *matHeaderCellDef> {{'USER.NUMBER' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{element.number}} </td>
       </ng-container>
 
@@ -48,17 +48,17 @@
       </ng-container>
 
       <ng-container matColumnDef="indirizzo">
-          <th mat-header-cell *matHeaderCellDef> Indirizzo </th>
+          <th mat-header-cell *matHeaderCellDef> {{'USER.ADDRESS' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{element.address}} </td>
       </ng-container>
 
       <ng-container matColumnDef="civico">
-          <th mat-header-cell *matHeaderCellDef> Numero civico </th>
+          <th mat-header-cell *matHeaderCellDef> {{'USER.HOUSENUMBER' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{element.houseNumber}} </td>
       </ng-container>
 
       <ng-container matColumnDef="corso">
-          <th mat-header-cell *matHeaderCellDef> Insegna </th>
+          <th mat-header-cell *matHeaderCellDef> {{'USER.TEACH' | translate}} </th>
           <td mat-cell *matCellDef="let element">
               <button mat-icon-button color="" (click)="addCourse(element)">
                   <mat-icon>add</mat-icon>
@@ -67,7 +67,7 @@
       </ng-container>
 
       <ng-container matColumnDef="modifica">
-          <th mat-header-cell *matHeaderCellDef> Modifica </th>
+          <th mat-header-cell *matHeaderCellDef> {{'OPTIONS.MODIFY' | translate}} </th>
           <td mat-cell *matCellDef="let element">
               <button mat-icon-button color="" (click)="startModify(element)">
                   <mat-icon>create</mat-icon>
@@ -76,7 +76,7 @@
       </ng-container>
 
       <ng-container matColumnDef="rimuovi">
-          <th mat-header-cell *matHeaderCellDef> Rimuovi </th>
+          <th mat-header-cell *matHeaderCellDef> {{'OPTIONS.DELETE' | translate}} </th>
           <td mat-cell *matCellDef="let element">
               <button mat-icon-button color="warn" (click)="deleteProfessore(element.id)">
                   <mat-icon>delete</mat-icon>

@@ -1,10 +1,26 @@
 <p>
   <mat-toolbar color="primary">
     <span>My App</span>
-      <!-- <button mat-button routerLink="/view1" routerLinkActive="active-link">View1</button>
-      <button mat-button routerLink="/view2" routerLinkActive="active-link">View2</button> -->
-      <button mat-button routerLink="/studente" routerLinkActive="active-link">Studenti</button>
-      <button mat-button routerLink="/professore" routerLinkActive="active-link">Professori</button>
-      <button mat-button routerLink="/corso" routerLinkActive="active-link">Corsi</button>
-    </mat-toolbar>
+      <button mat-button routerLink="/studente" routerLinkActive="active-link">{{'NAVBAR.STUDENTS' | translate}}</button>
+      <button mat-button routerLink="/professore" routerLinkActive="active-link">{{'NAVBAR.PROFESSORS' | translate}}</button>
+      <button mat-button routerLink="/corso" routerLinkActive="active-link">{{'NAVBAR.COURSES' | translate}}</button>
+      <button
+        id="lang"
+        mat-button=""
+        aria-label="Select a version"
+        mattooltip="Select a version of the documentation"
+        class="mat-focus-indicator mat-tooltip-trigger mat-menu-trigger mat-button mat-button-base"
+        aria-haspopup="true" aria-describedby="cdk-describedby-message-0"
+        cdk-describedby-host="">
+        <span class="mat-button-wrapper">
+          <select matNativeControl #langSelect (change)="translate.use(langSelect.value)">
+              <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+          </select>
+          <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true" data-mat-icon-type="font">arrow_drop_down</mat-icon>
+        </span>
+        <span matripple="" class="mat-ripple mat-button-ripple"></span>
+        <span class="mat-button-focus-overlay"></span>
+      </button>
+  </mat-toolbar>
 </p>
+

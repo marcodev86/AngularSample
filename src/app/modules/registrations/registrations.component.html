@@ -1,5 +1,5 @@
 <div id="title">
-    <h3> Corsi seguiti da
+    <h3> {{'REGISTRATIONS.HOME' | translate}}
         <br>
         <h2>{{student.name}} {{student.surname}}</h2>
     </h3>
@@ -13,32 +13,32 @@
       </ng-container>
 
       <ng-container matColumnDef="nome">
-          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <th mat-header-cell *matHeaderCellDef> {{'COURSE.NAME' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="descrizione">
-          <th mat-header-cell *matHeaderCellDef> Descrizione </th>
+          <th mat-header-cell *matHeaderCellDef> {{'COURSE.DESCRIPTION' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{element.description}} </td>
       </ng-container>
 
       <ng-container matColumnDef="docente">
-          <th mat-header-cell *matHeaderCellDef> Docente </th>
+          <th mat-header-cell *matHeaderCellDef> {{'COURSE.PROFESSOR' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{element.professor.name}} {{element.professor.surname}} </td>
       </ng-container>
 
       <ng-container matColumnDef="dataDiInizio">
-          <th mat-header-cell *matHeaderCellDef> Data di inizio corso </th>
+          <th mat-header-cell *matHeaderCellDef> {{'COURSE.BEGIN' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{(element.startDate | dayjsPipe : 'LL' : 'it') | async}} </td>
       </ng-container>
 
       <ng-container matColumnDef="dataDiFine">
-          <th mat-header-cell *matHeaderCellDef> Data di fine corso </th>
+          <th mat-header-cell *matHeaderCellDef> {{'COURSE.END' | translate}} </th>
           <td mat-cell *matCellDef="let element"> {{(element.endDate | dayjsPipe : 'LL' : 'it') | async}} </td>
       </ng-container>
 
       <ng-container matColumnDef="rimuovi">
-        <th mat-header-cell *matHeaderCellDef> Abbandona </th>
+        <th mat-header-cell *matHeaderCellDef> {{'REGISTRATIONS.BACK' | translate}} </th>
         <td mat-cell *matCellDef="let element">
           <button mat-icon-button color="warn" (click)="deleteRegistration(student, element)">
             <mat-icon>delete</mat-icon>

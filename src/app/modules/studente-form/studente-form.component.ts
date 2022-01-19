@@ -14,6 +14,7 @@ import { DateValidator } from 'src/app/shared/date.validator';
 import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
 import * as dayjs from 'dayjs';
+import { TranslateService } from '@ngx-translate/core';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -43,7 +44,8 @@ export class StudenteFormComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     @Inject(LOCALE_ID) public locale: string,
     private studenteService: StudenteServiceService,
-    public dialog: MatDialogRef<StudenteFormComponent>
+    public dialog: MatDialogRef<StudenteFormComponent>,
+    public translate: TranslateService
   ) {}
 
   ngOnInit(): void {

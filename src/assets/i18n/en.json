@@ -1,0 +1,47 @@
+{
+  "USER": {
+    "NAME": "Name",
+    "SURNAME": "Surname",
+    "DATE": "Date",
+    "CITY": "City",
+    "FISCALCODE": "Fiscal code",
+    "NUMBER": "Number",
+    "ADDRESS": "Address",
+    "HOUSENUMBER": "House number",
+    "COURSES": "Followed courses",
+    "TEACH": "Teach"
+  },
+  "COURSE": {
+    "NAME": "Name",
+    "DESCRIPTION": "Description",
+    "PROFESSOR": "Professor",
+    "BEGIN": "Course start date",
+    "END": "Course end date"
+  },
+  "OPTIONS": {
+    "MODIFY": "Modify",
+    "DELETE": "Delete",
+    "FILTER": "Filter"
+  },
+  "NAVBAR": {
+    "STUDENTS": "Students",
+    "PROFESSORS": "Professors",
+    "COURSES": "Courses"
+  },
+  "FORM": {
+    "STUDENT-ADD": "Add a new student",
+    "STUDENT-MODIFY": "Modify student",
+    "PROFESSOR-ADD": "Add a new professor",
+    "PROFESSOR-MODIFY": "Modify professor",
+    "COURSE-ADD": "Add a new course",
+    "COURSE-MODIFY": "Modify course"
+  },
+  "REGISTRATIONS": {
+    "HOME": "Course followed by",
+    "STUDENT": "Student",
+    "PROFESSOR": "Professor",
+    "SAVE": "Save",
+    "BACK": "Back",
+    "LEAVE": "Leave"
+  }
+}

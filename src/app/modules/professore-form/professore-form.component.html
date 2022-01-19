@@ -1,7 +1,7 @@
 <mat-dialog-content class="mat-typography">
   <div id="title">
-    <h1 *ngIf="isNew==true">Aggiungi un nuovo docente</h1>
-    <h1 *ngIf="isNew==false">Modifica il docente</h1>
+    <h1 *ngIf="isNew==true">{{'FORM.PROFESSOR-ADD' | translate}}</h1>
+    <h1 *ngIf="isNew==false">{{'FORM.PROFESSOR-MODIFY' | translate}}</h1>
   </div>
   <form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
       <p>

@@ -1,7 +1,7 @@
 <mat-dialog-content class="mat-typography">
   <div id="title">
-    <h1 *ngIf="isNew==true">Aggiungi un nuovo studente</h1>
-    <h1 *ngIf="isNew==false">Modifica lo studente</h1>
+    <h1 *ngIf="isNew==true">{{'FORM.STUDENT-ADD' | translate}}</h1>
+    <h1 *ngIf="isNew==false">{{'FORM.STUDENT-MODIFY' | translate}}</h1>
   </div>
   <form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
       <input placeholder="" id="id" type="hidden" />

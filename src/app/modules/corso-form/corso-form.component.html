@@ -1,6 +1,6 @@
 <div id="title">
-  <h1 *ngIf="isNew==true">Aggiungi un nuovo corso</h1>
-  <h1 *ngIf="isNew==false">Modifica il corso {{id}}</h1>
+  <h1 *ngIf="isNew==true">{{'FORM.COURSE-ADD' | translate}}</h1>
+  <h1 *ngIf="isNew==false">{{'FORM.COURSE-MODIFY' | translate}} {{id}}</h1>
 </div>
 <form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit($event)">
     <p>

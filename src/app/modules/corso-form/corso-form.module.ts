@@ -8,24 +8,21 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
-
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-    declarations: [
-        CorsoFormComponent
-    ],
-    exports: [
-        CorsoFormComponent
-    ],
-    imports: [
-        CommonModule,
-        CorsoFormRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatButtonModule,
-        MatSelectModule,
-        HttpClientModule
-    ]
+  declarations: [CorsoFormComponent],
+  exports: [CorsoFormComponent],
+  imports: [
+    CommonModule,
+    CorsoFormRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    HttpClientModule,
+    SharedModule,
+  ],
 })
-export class CorsoFormModule { }
+export class CorsoFormModule {}
