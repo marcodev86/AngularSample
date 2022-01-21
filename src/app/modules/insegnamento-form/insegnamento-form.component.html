@@ -5,7 +5,7 @@
       </h2>
       <p>
           <mat-form-field appearance="fill">
-              <mat-label>Corso</mat-label>
+              <mat-label>{{'REGISTRATIONS.COURSE' | translate}}</mat-label>
               <mat-select formControlName="courses">
                   <mat-option *ngFor="let c of course" [value]="c.id">
                       {{c.name}}

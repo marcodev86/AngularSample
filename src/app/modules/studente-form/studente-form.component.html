@@ -7,79 +7,79 @@
       <input placeholder="" id="id" type="hidden" />
       <p>
           <mat-form-field appearance="outline">
-              <mat-label>Nome</mat-label>
-              <input matInput placeholder="Inserisci il nome dello studente"  formControlName="name">
-              <mat-error *ngIf="hasError('name', 'required')">Il nome è richiesto</mat-error>
-              <mat-error *ngIf="hasError('name', 'maxlength')">Hai inserito più di 50 caratteri</mat-error>
+              <mat-label>{{'STUDENT-FORM.NAME-LABEL' | translate}}</mat-label>
+              <input matInput placeholder="{{'STUDENT-FORM.NAME-PLACEHOLDER' | translate}}"  formControlName="name">
+              <mat-error *ngIf="hasError('name', 'required')">{{'STUDENT-FORM.NAME-REQUIRED' | translate}}</mat-error>
+              <mat-error *ngIf="hasError('name', 'maxlength')">{{'STUDENT-FORM.NAME-LENGTH' | translate}}</mat-error>
           </mat-form-field>
       </p>
       <p>
           <mat-form-field appearance="outline">
-              <mat-label>Cognome</mat-label>
-              <input matInput placeholder="Inserisci il cognome dello studente" formControlName="surname">
-              <mat-error *ngIf="hasError('surname', 'required')">Il cognome è richiesto</mat-error>
-              <mat-error *ngIf="hasError('surname', 'maxlength')">Hai inserito più di 60 caratteri</mat-error>
+              <mat-label>{{'STUDENT-FORM.SURNAME-LABEL' | translate}}</mat-label>
+              <input matInput placeholder="{{'STUDENT-FORM.SURNAME-PLACEHOLDER' | translate}}" formControlName="surname">
+              <mat-error *ngIf="hasError('surname', 'required')">{{'STUDENT-FORM.SURNAME-REQUIRED' | translate}}</mat-error>
+              <mat-error *ngIf="hasError('surname', 'maxlength')">{{'STUDENT-FORM.SURNAME-LENGTH' | translate}}</mat-error>
           </mat-form-field>
       </p>
       <p>
           <mat-form-field appearance="outline">
-              <mat-label>Data di nascita</mat-label>
-              <input matInput placeholder="Inserisci la data di nascita dello studente" formControlName="birthdayDate">
+              <mat-label>{{'STUDENT-FORM.DATE-LABEL' | translate}}</mat-label>
+              <input matInput placeholder="{{'STUDENT-FORM.DATE-LABEL' | translate}}" formControlName="birthdayDate">
               <mat-hint>yyyy-mm-dd</mat-hint>
           </mat-form-field>
       </p>
       <p>
           <mat-form-field appearance="outline">
-              <mat-label>Comune di residenza</mat-label>
-              <input matInput placeholder="Inserisci il comune di residenza dello studente" formControlName="city">
-              <mat-error *ngIf="hasError('city', 'required')">Il comune di residenza è richiesto</mat-error>
-              <mat-error *ngIf="hasError('city', 'maxlength')">Hai inserito più di 50 caratteri</mat-error>
+              <mat-label>{{'STUDENT-FORM.CITY-LABEL' | translate}}</mat-label>
+              <input matInput placeholder="{{'STUDENT-FORM.CITY-PLACEHOLDER' | translate}}" formControlName="city">
+              <mat-error *ngIf="hasError('city', 'required')">{{'STUDENT-FORM.CITY-REQUIRED' | translate}}</mat-error>
+              <mat-error *ngIf="hasError('city', 'maxlength')">{{'STUDENT-FORM.CITY-LENGTH' | translate}}</mat-error>
           </mat-form-field>
       </p>
       <p>
           <mat-form-field appearance="outline">
-              <mat-label>CAP</mat-label>
-              <input matInput placeholder="Inserisci il cap del comune di residenza" formControlName="cap">
-              <mat-error *ngIf="hasError('cap', 'required')">Il Cap è richiesto</mat-error>
-              <mat-error *ngIf="hasError('cap', 'maxlength')">Hai inserito più di 6 caratteri</mat-error>
+              <mat-label>{{'STUDENT-FORM.CAP-LABEL' | translate}}</mat-label>
+              <input matInput placeholder="{{'STUDENT-FORM.CAP-PLACEHOLDER' | translate}}" formControlName="cap">
+              <mat-error *ngIf="hasError('cap', 'required')">{{'STUDENT-FORM.CAP-REQUIRED' | translate}}</mat-error>
+              <mat-error *ngIf="hasError('cap', 'maxlength')">{{'STUDENT-FORM.CAP-LENGTH' | translate}}</mat-error>
           </mat-form-field>
       </p>
       <p>
           <mat-form-field appearance="outline">
-              <mat-label>Indirizzo</mat-label>
-              <input matInput placeholder="Inserisci l'indirizzo di residenza dello studente" formControlName="address">
-              <mat-error *ngIf="hasError('address', 'required')">L'indirizzo di residenza è richiesto</mat-error>
-              <mat-error *ngIf="hasError('address', 'maxlength')">Hai inserito più di 80 caratteri</mat-error>
+              <mat-label>{{'STUDENT-FORM.ADDRESS-LABEL' | translate}}</mat-label>
+              <input matInput placeholder="{{'STUDENT-FORM.ADDRESS-PLACEHOLDER' | translate}}" formControlName="address">
+              <mat-error *ngIf="hasError('address', 'required')">{{'STUDENT-FORM.ADDRESS-REQUIRED' | translate}}</mat-error>
+              <mat-error *ngIf="hasError('address', 'maxlength')">{{'STUDENT-FORM.ADDRESS-LENGTH' | translate}}</mat-error>
           </mat-form-field>
       </p>
       <p>
           <mat-form-field appearance="outline">
-              <mat-label>Numero civico</mat-label>
-              <input matInput placeholder="Inserisci il numero civico della residenza dello studente" formControlName="houseNumber">
-              <mat-error *ngIf="hasError('houseNumber', 'required')">Il numero civico è richiesto</mat-error>
-              <mat-error *ngIf="hasError('houseNumber', 'maxlength')">Hai inserito più di 10 caratteri</mat-error>
+              <mat-label>{{'STUDENT-FORM.HOUSENUMBER-LABEL' | translate}}</mat-label>
+              <input matInput placeholder="{{'STUDENT-FORM.HOUSENUMBER-PLACEHOLDER' | translate}}" formControlName="houseNumber">
+              <mat-error *ngIf="hasError('houseNumber', 'required')">{{'STUDENT-FORM.HOUSENUMBER-REQUIRED' | translate}}</mat-error>
+              <mat-error *ngIf="hasError('houseNumber', 'maxlength')">{{'STUDENT-FORM.HOUSENUMBER-LENGTH' | translate}}</mat-error>
           </mat-form-field>
       </p>
       <p>
           <mat-form-field appearance="outline">
-              <mat-label>Codice fiscale</mat-label>
-              <input matInput placeholder="Inserisci il codice fiscale dello studente" formControlName="fiscalCode">
-              <mat-error *ngIf="hasError('fiscalCode', 'required')">Il codice fiscale è richiesto</mat-error>
-              <mat-error *ngIf="hasError('fiscalCode', 'maxlength')">Hai inserito più di 30 caratteri</mat-error>
+              <mat-label>{{'STUDENT-FORM.CODE-LABEL' | translate}}</mat-label>
+              <input matInput placeholder="{{'STUDENT-FORM.CODE-PLACEHOLDER' | translate}}" formControlName="fiscalCode">
+              <mat-error *ngIf="hasError('fiscalCode', 'required')">{{'STUDENT-FORM.CODE-REQUIRED' | translate}}</mat-error>
+              <mat-error *ngIf="hasError('fiscalCode', 'maxlength')">{{'STUDENT-FORM.CODE-LENGTH' | translate}}</mat-error>
           </mat-form-field>
       </p>
       <p>
           <mat-form-field appearance="outline">
-              <mat-label>Telefono</mat-label>
-              <input matInput placeholder="Inserisci il numero di telefono dello studente" formControlName="number">
-              <mat-error *ngIf="hasError('number', 'required')">Il numero di telefono è richiesto</mat-error>
-              <mat-error *ngIf="hasError('number', 'maxlength')">Hai inserito più di 30 caratteri</mat-error>
+              <mat-label>{{'STUDENT-FORM.NUMBER-LABEL' | translate}}</mat-label>
+              <input matInput placeholder="{{'STUDENT-FORM.NUMBER-PLACEHOLDER' | translate}}" formControlName="number">
+              <mat-error *ngIf="hasError('number', 'required')">{{'STUDENT-FORM.NUMBER-REQUIRED' | translate}}</mat-error>
+              <mat-error *ngIf="hasError('number', 'maxlength')">{{'STUDENT-FORM.NUMBER-LENGTH' | translate}}</mat-error>
           </mat-form-field>
       </p>
 
       <mat-dialog-actions align="center">
-        <button mat-raised-button mat-dialog-close>Indietro</button>
-        <button mat-raised-button color="primary" class="form" type="submit">Salva studente</button>
+        <button mat-raised-button mat-dialog-close>{{'STUDENT-FORM.BACK' | translate}}</button>
+        <button mat-raised-button color="primary" class="form" type="submit">{{'STUDENT-FORM.SAVE' | translate}}</button>
       </mat-dialog-actions>
   </form>
 </mat-dialog-content>

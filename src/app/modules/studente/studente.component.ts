@@ -40,7 +40,6 @@ export class StudenteComponent implements OnInit, OnDestroy {
 
   private getStudentSubscription$: Subscription | undefined;
   private deleteStudentSubscription$: Subscription | undefined;
-  // private subscription$: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -48,7 +47,8 @@ export class StudenteComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     @Inject(LOCALE_ID) public locale: string,
     private studenteService: StudenteServiceService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public translate: TranslateService
   ) {}
 
   @ViewChild(MatSort) sort: any;
@@ -63,14 +63,12 @@ export class StudenteComponent implements OnInit, OnDestroy {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });
-    //this.subscription$ = this.getStudentSubscription$;
   }
 
   ngOnDestroy(): void {
     this.studenteService.dataSourceStudente = new MatTableDataSource();
     this.getStudentSubscription$?.unsubscribe();
     this.deleteStudentSubscription$?.unsubscribe();
-    //this.subscription$?.unsubscribe();
   }
 
   filter(changes: any): void {
@@ -94,7 +92,6 @@ export class StudenteComponent implements OnInit, OnDestroy {
       data.splice(index, 1);
       this.dataSource._updateChangeSubscription();
     });
-    // this.subscription$?.add(this.deleteStudentSubscription$);
   }
 
   startModify(element: any) {

@@ -5,23 +5,23 @@
 <form class="form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit($event)">
     <p>
         <mat-form-field appearance="outline">
-            <mat-label>Nome</mat-label>
-            <input matInput placeholder="Inserisci il nome del corso" formControlName="name">
-            <mat-error *ngIf="hasError('name', 'required')">Il nome del corso è richiesto</mat-error>
-            <mat-error *ngIf="hasError('name', 'maxlength')">Hai inserito più di 100 caratteri</mat-error>
+            <mat-label>{{'COURSE-FORM.NAME-LABEL' | translate}}</mat-label>
+            <input matInput placeholder="{{'COURSE-FORM.NAME-PLACEHOLDER' | translate}}" formControlName="name">
+            <mat-error *ngIf="hasError('name', 'required')">{{'COURSE-FORM.NAME-REQUIRED' | translate}}</mat-error>
+            <mat-error *ngIf="hasError('name', 'maxlength')">{{'COURSE-FORM.NAME-LENGTH' | translate}}</mat-error>
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="outline">
-            <mat-label>Descrizione</mat-label>
-            <input matInput placeholder="Inserisci una descrizione del corso" formControlName="description">
-            <mat-error *ngIf="hasError('description', 'required')">La descrizione del corso è richiesta</mat-error>
-            <mat-error *ngIf="hasError('description', 'maxlength')">Hai inserito più di 200 caratteri</mat-error>
+            <mat-label>{{'COURSE-FORM.DESCRIPTION-LABEL' | translate}}</mat-label>
+            <input matInput placeholder="{{'COURSE-FORM.DESCRIPTION-PLACEHOLDER' | translate}}" formControlName="description">
+            <mat-error *ngIf="hasError('description', 'required')">{{'COURSE-FORM.DESCRIPTION-REQUIRED' | translate}}</mat-error>
+            <mat-error *ngIf="hasError('description', 'maxlength')">{{'COURSE-FORM.DESCRIPTION-LENGTH' | translate}}</mat-error>
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="fill">
-            <mat-label>Docente</mat-label>
+            <mat-label>{{'COURSE-FORM.PROFESSOR-LABEL' | translate}}</mat-label>
             <mat-select formControlName="professor">
                 <mat-option *ngFor="let p of professor" [value]="p.id">
                     {{p.name}} {{p.surname}}
@@ -31,19 +31,19 @@
     </p>
     <p>
         <mat-form-field appearance="outline">
-            <mat-label>Data di inizio corso</mat-label>
-            <input matInput placeholder="Inserisci la data di inizio del corso" formControlName="startDate">
+            <mat-label>{{'COURSE-FORM.BEGIN-LABEL' | translate}}</mat-label>
+            <input matInput placeholder="{{'COURSE-FORM.BEGIN-PLACEHOLDER' | translate}}" formControlName="startDate">
             <mat-hint>yyyy-mm-dd</mat-hint>
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="outline">
-            <mat-label>Data di fine corso</mat-label>
-            <input matInput placeholder="Inserisci la data di fine del corso" formControlName="endDate">
+            <mat-label>{{'COURSE-FORM.END-LABEL' | translate}}</mat-label>
+            <input matInput placeholder="{{'COURSE-FORM.END-PLACEHOLDER' | translate}}" formControlName="endDate">
             <mat-hint>yyyy-mm-dd</mat-hint>
         </mat-form-field>
     </p>
 
-    <button mat-raised-button (click)="clickEvent($event)">Indietro</button>
-    <button mat-raised-button color="primary" class="form" type="submit">Salva corso</button>
+    <button mat-raised-button (click)="clickEvent($event)">{{'COURSE-FORM.BACK' | translate}}</button>
+    <button mat-raised-button color="primary" class="form" type="submit">{{'COURSE-FORM.SAVE' | translate}}</button>
 </form>
